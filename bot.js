@@ -28,9 +28,7 @@ if(message.content.startsWith(prefix + "servers")) {
                     bot.users.get("168865955940794368").send("These servers are: " + list);
 }
     
-if (message.content.startsWith(prefix + "test")) {
-                message.author.send(" Test.");
-        }
+
         if(message.content.includes("hungry") || message.content.includes(" eating ") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")){
             let food = [
                 "https://media-cdn.tripadvisor.com/media/photo-s/0b/b3/58/52/mouth-watering-food.jpg",
@@ -86,7 +84,7 @@ if (message.content.startsWith(prefix + "test")) {
             if (message.content.startsWith(prefix + "help")) {
                 message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` to see what I can currently do."); }
             if (message.content.startsWith(prefix + "commands")) {
-                message.channel.send("My current commands are: `ping, copy, roast, and dex`! More will be added in the near future.");
+                message.author.send("My current commands are: \n`roast` - Insult your friends with my ever-growing list of roasts and insults\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
         }
             if (message.content.startsWith(prefix + "invite")) {
                 message.channel.send("If you'd ike to invite me to your server then please click the following link: https://discordapp.com/oauth2/authorize?client_id=463451155842727938&scope=bot&permissions=21469585912");
@@ -241,7 +239,7 @@ if (message.content.startsWith(prefix + "test")) {
             message.channel.send(embed)
         }            
         }
-        if(message.content.startsWith(prefix + "dex")) {
+        if(message.content.startsWith(prefix + "dex") || (message.content.startsWith(prefix + "pokedex")) {
             String.prototype.capitalize = function() {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
