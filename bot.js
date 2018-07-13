@@ -68,6 +68,7 @@ if(message.content.startsWith(prefix + "servers")) {
             }
             if (message.content.includes("good one")) {
                 message.channel.send("Let's hear another.");
+                }
             if (message.content.includes(" crine ")) {
                 message.channel.send("crying*");
             }   
