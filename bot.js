@@ -29,7 +29,7 @@ if(message.content.startsWith(prefix + "servers")) {
 }
     
 
-        if(message.content.includes("hungry") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")){
+        if(message.content.includes("hungry") || message.content.includes(" eating ") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")){
             let food = [
                 "https://media-cdn.tripadvisor.com/media/photo-s/0b/b3/58/52/mouth-watering-food.jpg",
                 "https://image.shutterstock.com/image-photo/close-mouth-watering-flavored-fried-260nw-258246467.jpg",
