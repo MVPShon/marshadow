@@ -42,9 +42,11 @@ if(message.content.startsWith(prefix + "servers")) {
                 "https://lifeloveandgoodfood.com/wp-content/uploads/2014/03/Cheesy-Chicken-Enchiladas_8801-400x600.jpg",
                 "https://foodchannelcom.files.wordpress.com/2017/08/richmond-buffalo-chicken-waffle-fries.jpg?w=1000&h=600&crop=1",
                 "http://www.sgfoodie.com/wp-content/uploads/2016/07/Truly-Test-Kitchen-Curry-Chicken-Chop-Noodle.jpg",
-                "http://blogs.kcrw.com/goodfood/wp-content/uploads/2014/03/220SmashedSteakSkewerswCherryBarbecueSauceS-1-e1396028805889.jpg"
-    
-            ]
+                "http://blogs.kcrw.com/goodfood/wp-content/uploads/2014/03/220SmashedSteakSkewerswCherryBarbecueSauceS-1-e1396028805889.jpg",
+                "https://cdn.discordapp.com/attachments/466436909607157772/467211741952999425/a407f65.jpg",
+                "https://amp.businessinsider.com/images/551992b56da8115001dd9d1e-750-562.jpg",
+                "https://media-cdn.tripadvisor.com/media/photo-s/0a/4e/04/46/best-food-ever.jpg"
+                        ]
             let randfood = Math.floor((Math.random() * food.length))
             let embed = new Discord.RichEmbed()
             .setAuthor("Food", bot.user.displayAvatarURL)
@@ -66,28 +68,6 @@ if(message.content.startsWith(prefix + "servers")) {
             }
             if (message.content.includes("good one")) {
                 message.channel.send("Let's hear another.");
-            }   
-            if (message.content.includes(" u ")) {
-                message.channel.send("You*");
-            }   
-            if (message.content.includes(" im ")) {
-                message.channel.send("I'm*");
-            }   
-            if (message.content.includes(" cuz ")) {
-                message.channel.send("Because*");
-            }   
-            if (message.content.includes(" i ")) {
-                message.channel.send("I*");
-            }   
-            if (message.content.includes(" wat ")) {
-                message.channel.send("What*");
-            }   
-            if (message.content.includes(" wat's ")) {
-                message.channel.send("What's*");
-            }   
-            if (message.content.includes(" wats ")) {
-                message.channel.send("What's*");
-            }   
             if (message.content.includes(" crine ")) {
                 message.channel.send("crying*");
             }   
@@ -97,22 +77,19 @@ if(message.content.startsWith(prefix + "servers")) {
             if (message.content.includes("yo said")) {
                 message.channel.send("You said*");
             }   
-            if (message.content.includes(" ur ")) {
-                message.channel.send("Your*");
-            }   
-        if (message.content.startsWith(prefix + "ping")) {
-            message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
+            if (message.content.startsWith(prefix + "ping")) {
+                message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
         }
-        if (message.content.startsWith(prefix + "help")) {
-            message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` to see what I can currently do."); }
-        if (message.content.startsWith(prefix + "commands")) {
-            message.channel.send("My current commands are: `ping, copy, roast, and dex`! More will be added in the near future.");
+            if (message.content.startsWith(prefix + "help")) {
+                message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` to see what I can currently do."); }
+            if (message.content.startsWith(prefix + "commands")) {
+                message.channel.send("My current commands are: `ping, copy, roast, and dex`! More will be added in the near future.");
         }
-        if (message.content.startsWith(prefix + "invite")) {
-            message.channel.send("If you'd ike to invite me to your server then please click the following link: https://discordapp.com/oauth2/authorize?client_id=463451155842727938&scope=bot&permissions=21469585912");
+            if (message.content.startsWith(prefix + "invite")) {
+                message.channel.send("If you'd ike to invite me to your server then please click the following link: https://discordapp.com/oauth2/authorize?client_id=463451155842727938&scope=bot&permissions=21469585912");
         }
-        if(message.content.startsWith(prefix + "roast")) {
-            let insults = [
+            if(message.content.startsWith(prefix + "roast")) {
+                let insults = [
                 "a douche of your magnitude could cleanse the vagina of a whale.",
                 "if you want my comeback, you're gonna have to wipe it off your mom's face.",
                 "whoever's willing to fuck you is just too lazy to jerk off.",
