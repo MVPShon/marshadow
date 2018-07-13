@@ -239,7 +239,7 @@ if(message.content.startsWith(prefix + "servers")) {
             message.channel.send(embed)
         }            
         }
-        if(message.content.startsWith(prefix + "dex") || (message.content.startsWith(prefix + "pokedex")) {
+        if(message.content.startsWith(prefix + "dex") || (message.content.startsWith(prefix + "pokedex")) ){
             String.prototype.capitalize = function() {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
