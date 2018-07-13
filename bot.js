@@ -28,7 +28,9 @@ if(message.content.startsWith(prefix + "servers")) {
                     bot.users.get("168865955940794368").send("These servers are: " + list);
 }
     
-
+if (message.content.startsWith(prefix + "test")) {
+                message.author.send(" Test.");
+        }
         if(message.content.includes("hungry") || message.content.includes(" eating ") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")){
             let food = [
                 "https://media-cdn.tripadvisor.com/media/photo-s/0b/b3/58/52/mouth-watering-food.jpg",
