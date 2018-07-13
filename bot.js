@@ -2,9 +2,6 @@ const Discord = require("discord.js");
 oakdexPokedex = require('oakdex-pokedex');
 let bot = new Discord.Client();
 let prefix = "u!"; //put your prefix between the "" eg Sylveons prefix is ?
-let cooldown = new Set();
-let cdseconds = 10;
-
 
 bot.on("ready", () => {
 console.log("Ready!")
@@ -23,12 +20,25 @@ bot.on("message", async message => {
     let messsageArray = message.content.split(" ");
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
-
-    if(message.content.startsWith(prefix + "servers")) {
-        var list = bot.guilds.array().sort();
-        bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
-        bot.users.get("168865955940794368").send("These servers are: " + list);
+    
+var cooldown = function (thisArg, fn, timeout) {
+    var onCooldown = false;
+    return function (/* args */) {
+        if (!onCooldown) {
+            if(message.content.startsWith(prefix + "servers")) {
+                var list = bot.guilds.array().sort();
+                    bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
+                    bot.users.get("168865955940794368").send("These servers are: " + list);
         }
+            onCooldown = true;
+            setTimeout(function () {
+                if(onCooldoown = true) { message.channel.send("You need to wait 10 seconds in between commands.");
+                onCooldown = false;
+            }, timeout);
+        }
+    }
+}
+    
 
         if(message.content.includes("hungry") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")){
             let food = [
