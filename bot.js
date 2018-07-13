@@ -253,7 +253,6 @@ if(message.content.startsWith(prefix + "servers")) {
                 .setAuthor("Pokédex", bot.user.displayAvatarURL)
                 .setColor("RANDOM")
                 .addField("Name:", name, true)
-                .addField("Abilities:", abilities, true)
                 .addField("Types:", types, true)
                 .addField("Pokemon Catch Rate", catchrate, true)
                 .addField("HP:", base_stats.hp, true)
