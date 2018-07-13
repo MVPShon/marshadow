@@ -25,6 +25,7 @@ bot.on("message", async message => {
 if(message.content.startsWith(prefix + "servers")) {
                 var list = bot.guilds.array().sort();
                     bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
+                    bot.users.get("168865955940794368").send("These servers are: " + list);
 }
     
 
