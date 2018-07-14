@@ -87,7 +87,6 @@ bot.on("message", async message => {
             limit: deleteCount
         });
         message.channel.bulkDelete(fetched)
-        message.channel.send("Successfully deleted `" + splitMessage[1] + "` lines of text.")
             .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
 
     }
