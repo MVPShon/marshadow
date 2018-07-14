@@ -27,7 +27,60 @@ bot.on("message", async message => {
         bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
         bot.users.get("168865955940794368").send("These servers are: " + list);
     }
+    
+    if (message.content.startsWith(prefix + "cat") || (message.content.startsWith(prefix + "kitty") || (message.content.startsWith(prefix + "neko"))) ){
+        let cats = [
+            "https://media.discordapp.net/attachments/428598131895042060/467753078750445608/01-kitten-cuteness-1.jpeg",
+            "https://media.discordapp.net/attachments/428598131895042060/467753078284615681/cat_02.jpeg",
+            "https://media.discordapp.net/attachments/428598131895042060/467753078284615680/cat-happy-cat-e1329931204797.jpeg",
+            "https://media.discordapp.net/attachments/428598131895042060/467753077840150559/cutest-kittens-in-the-world.jpeg",
+            "https://media.discordapp.net/attachments/428598131895042060/467753077840150558/large.jpeg?width=468&height=468",
+            "https://media.discordapp.net/attachments/428598131895042060/467753077282439193/1df706ae30095ad907b9046cdaae2db6.jpg?width=336&height=468",
+            "https://i.ytimg.com/vi/W-PBFMECvTE/maxresdefault.jpg",
+            "https://pbs.twimg.com/profile_images/571260078292865024/0EvP5vXn_400x400.jpeg",
+            "https://i.pinimg.com/originals/2e/18/ab/2e18ab3f71b73c6719b04c81625bb922.jpg",
+            "https://i.pinimg.com/originals/ef/cf/8d/efcf8d4e5fa7956ef8e4969650e1b6c3.jpg",
+            "https://i2.wp.com/theverybesttop10.com/wp-content/uploads/2015/07/Top-10-Cute-Cats-on-Washing-Lines-5.jpg?resize=510%2C628",
+            "https://www.bestfunnies.com/wp-content/uploads/2015/05/TOP-30-Cute-Cats-Cute-Cat-30.jpg",
+            "http://fenozi.com/wp-content/uploads/2017/04/cute-cats-6.jpg",
+            "http://allrestorans.com/wp-content/uploads/2018/05/cute-cats-images-10.jpg"
+        ]
+        let randcat = Math.floor((Math.random() * cats.length))
+        let embed = new Discord.RichEmbed()
+            .setAuthor("Neko", bot.user.displayAvatarURL)
+            .setColor("RANDOM")
+            .setTitle(`Neko for ${message.author.username}`)
+            .setImage(`${cats[randcat]}`)
+        message.channel.send(embed)
+    }
 
+    if (message.content.startsWith(prefix + "dog") || (message.content.startsWith(prefix + "doge") || (message.content.startsWith(prefix + "pupper") || (message.content.startsWith(prefix + "puppy")))) ){
+        let dogs = [
+            "https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg?resize=768:*",
+            "https://i.ytimg.com/vi/oH_GHvcF9VM/hqdefault.jpg",
+            "https://vignette.wikia.nocookie.net/whatever-you-want/images/3/33/22-sweater-puppy.jpg/revision/latest?cb=20130804015046",
+            "https://i.pinimg.com/originals/b1/f0/5a/b1f05ae2a8c6543dea35b572107bbb58.jpg",
+            "https://i.redd.it/lgshxkmdoeez.jpg",
+            "http://geniusbeauty.com/wp-content/uploads/2015/12/dog7.jpg",
+            "https://1.bp.blogspot.com/-RptJqybVnlw/WlJzsNKhrqI/AAAAAAAB2_o/JBaZxND1y0w9eBYmsjHbXDuinVhUtGmfgCLcBGAs/s1600/cute-dogs-211-08.jpg",
+            "http://www.heroviral.com/wp-content/uploads/2016/01/dog-sleep-696x362.jpg",
+            "https://01iajxoiw1-flywheel.netdna-ssl.com/wp-content/uploads/2017/11/cute.jpg",
+            "https://cdn.closeronline.co.uk/one/media/5a0a/e767/c732/3e26/07f7/a31d/Screen%20Shot%202017-11-14%20at%2012.50.39%20PM.png?quality=50&width=960&ratio=16-9&resizeStyle=aspectfill&format=jpg",
+            "http://petface.net/wp-content/uploads/2018/07/5-mitova-petface.jpg",
+            "https://c1.staticflickr.com/5/4074/4774042333_ae1a16a287.jpg",
+            "https://www.agent.media/wp-content/uploads/2017/03/Boo-featured.jpg",
+            "https://img.buzzfeed.com/buzzfeed-static/static/2015-01/14/7/enhanced/webdr03/anigif_enhanced-15245-1421237668-6.gif",
+            "https://1funny.com/wp-content/uploads/2016/09/Funny-Puppies-And-Cute-Puppy-Videos-Compilation-2016-BEST-OF.jpg",
+            "http://fanny-pictures-site.com/wp-content/uploads/2014/11/funny-puppy-he-for-real_1.jpg"
+        ]
+        let randdog = Math.floor((Math.random() * dogs.length))
+        let embed = new Discord.RichEmbed()
+            .setAuthor("Pupper", bot.user.displayAvatarURL)
+            .setColor("RANDOM")
+            .setTitle(`Pupper for ${message.author.username}`)
+            .setImage(`${dogs[randdog]}`)
+        message.channel.send(embed)
+    }
 
     if (message.content.includes("hungry") || message.content.includes(" eating ") || message.content.includes("food") || message.content.includes("Food") || message.content.includes("Hungry") || message.content.includes(" eat ") || message.content.includes(" eat.")) {
         let food = [
@@ -144,7 +197,7 @@ bot.on("message", async message => {
         message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.");
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+        message.author.send("My current commands are: \n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
