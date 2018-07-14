@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 oakdexPokedex = require('oakdex-pokedex');
 let bot = new Discord.Client();
-let prefix = "u!"; //put your prefix between the "" eg Sylveons prefix is ?
+let prefix = "u!";
+const Kaori = require('kaori');
+const kaori = new Kaori();
 
 bot.on("ready", () => {
     console.log("Ready!")
@@ -26,6 +28,19 @@ bot.on("message", async message => {
         var list = bot.guilds.array().sort();
         bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
         bot.users.get("168865955940794368").send("These servers are: " + list);
+    }
+        if(message.content.startsWith(prefix + "rule34") || (message.content.startsWith(prefix + "r34")) ){
+        if(!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
+        kaori.search('rule34', { tags: [`${args[0]}`], limit: 1, random: true })
+        .then(images => {(
+            console.log(images[0].common.fileURL))
+            let Embed = new Discord.RichEmbed()
+            .setAuthor("Rule34 Search", bot.user.displayAvatarURL)
+            .setColor("RANDOM")
+            .setTitle(`Result for: ${args[0]}`)
+            .setImage(images[0].common.fileURL)
+            message.channel.send(Embed)
+        }).catch(err => console.error(err));
     }
     
     if (message.content.startsWith(prefix + "cat") || (message.content.startsWith(prefix + "kitty") || (message.content.startsWith(prefix + "neko"))) ){
