@@ -211,7 +211,7 @@ bot.on("message", async message => {
     }
     if (message.content.startsWith(prefix + "commands")) {
         message.author.send("My current commands are: \n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
-        message.author.send("NSFW Commands: `rule34` or 2`34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`");
+        message.author.send("NSFW Commands: `rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`");
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
