@@ -49,7 +49,6 @@ bot.on("message", async message => {
         let embed = new Discord.RichEmbed()
             .setAuthor("Neko", bot.user.displayAvatarURL)
             .setColor("RANDOM")
-            .setTitle(`Neko for ${message.author.username}`)
             .setImage(`${cats[randcat]}`)
         message.channel.send(embed)
     }
@@ -77,7 +76,6 @@ bot.on("message", async message => {
         let embed = new Discord.RichEmbed()
             .setAuthor("Pupper", bot.user.displayAvatarURL)
             .setColor("RANDOM")
-            .setTitle(`Pupper for ${message.author.username}`)
             .setImage(`${dogs[randdog]}`)
         message.channel.send(embed)
     }
