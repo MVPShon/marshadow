@@ -142,10 +142,13 @@ bot.on("message", async message => {
         message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
     }
     if (message.content.startsWith(prefix + "help")) {
-        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` to see what I can currently do.");
+        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.");
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`roast` - Insult your friends with my ever-growing list of roasts and insults\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+        message.author.send("My current commands are: \n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+    }
+    if (message.content.startsWith(prefix + "admin")) {
+        message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
     }
     if (message.content.startsWith(prefix + "invite")) {
         message.channel.send("If you'd ike to invite me to your server then please click the following link: https://discordapp.com/oauth2/authorize?client_id=463451155842727938&scope=bot&permissions=21469585912");
