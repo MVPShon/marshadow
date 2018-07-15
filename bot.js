@@ -65,6 +65,19 @@ bot.on("message", async message => {
             message.channel.send(Embed)
         }).catch(err => message.channel.send("No image found for your search!"));
     }
+            if(message.content.startsWith(prefix + "danbooru") || (message.content.startsWith(prefix + "db")) ){
+        if(!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
+        kaori.search('danbooru', { tags: [`${args[0]}`], limit: 1, random: true })
+        .then(images => {(
+            console.log(images[0].common.fileURL))
+            let Embed = new Discord.RichEmbed()
+            .setAuthor("Danbooru Search", bot.user.displayAvatarURL)
+            .setColor("RANDOM")
+            .setTitle(`Result for: ${args[0]}`)
+            .setImage(images[0].common.fileURL)
+            message.channel.send(Embed)
+        }).catch(err => message.channel.send("No image found for your search!"));
+    }
     
     if (message.content.startsWith(prefix + "cat") || (message.content.startsWith(prefix + "kitty") || (message.content.startsWith(prefix + "neko"))) ){
         let cats = [
@@ -234,7 +247,7 @@ bot.on("message", async message => {
     }
     if (message.content.startsWith(prefix + "commands")) {
         message.author.send("My current commands are: \n`google` - Searches Google for your terms. Aliases `g2, search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
-        message.author.send("NSFW Commands: `rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`");
+        message.author.send("NSFW Commands: `rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
