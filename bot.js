@@ -463,8 +463,8 @@ bot.on("message", async message => {
                 .addField("SP ATK:", base_stats.sp_atk, true)
                 .addField("SP DEF:", base_stats.sp_def, true)
                 .addField("SPEED:", base_stats.speed, true)
-                .setImage(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
-                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani-shiny/${args[0]}.gif`, true)
+                .setImage(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`)
+                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani-shiny/${args[0]}.gif`)
             message.channel.send(embed)
         });
     }
