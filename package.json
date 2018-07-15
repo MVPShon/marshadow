@@ -13,6 +13,6 @@
     "google": "^2.1.0",
     "kaori": "^1.1.4",
     "oakdex-pokedex": "^0.2.2",
-    "webdict": "^0.2.2",
+    "webdict": "^0.2.2"
   }
-
+}
