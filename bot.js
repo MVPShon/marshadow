@@ -45,6 +45,30 @@ bot.on("message", async message => {
              });
      }
 
+         if (message.content.startsWith(prefix + "yt")||(message.content.startsWith(prefix + "youtube")||(message.content.startsWith(prefix + "yootoob"))) ){
+            var APIKEY = "AIzaSyB_8RLjvATBxCzSlrwQt2ghdYk0mJTjupw";
+            var QUERY = `${args.join(" ")}`; 
+            var { YTSearcher } = require('ytsearcher');
+            var ytsearcher = new YTSearcher(APIKEY);
+            ytsearcher.search(QUERY, { type: 'video' })
+            .then(searchResult => {
+              searchResult.nextPage()
+              .then(secondPage => {            
+                var page = secondPage.currentPage;
+                var videoEntry = page[1];
+                let Embed = new Discord.RichEmbed()
+                .setAuthor("YouTube Search", bot.user.displayAvatarURL)
+                .setColor("RED")
+                .setTitle(videoEntry.title)
+                .setImage(videoEntry.thumbnails.high.url)
+                .setDescription(videoEntry.description)
+                .setURL(videoEntry.url);
+                message.channel.send(Embed)
+            }).catch(err => message.reply("No results found!"));
+            });
+
+        }
+        
         if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud")) ){
             var webdict = require('webdict');
             webdict('urbandictionary', `${args.join(" ")}`)
