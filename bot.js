@@ -7,7 +7,7 @@ const kaori = new Kaori();
 
 bot.on("ready", () => {
     console.log("Ready!")
-    bot.user.setActivity('you fap.', { type: 'WATCHING' })
+    bot.user.setActivity('YouTube', { type: 'WATCHING' })
 });
 
 bot.on("guildCreate", guild => {
