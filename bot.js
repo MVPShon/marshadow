@@ -7,7 +7,7 @@ const kaori = new Kaori();
 
 bot.on("ready", () => {
     console.log("Ready!")
-    bot.user.setActivity('with deez nuts.')
+    bot.user.setActivity('YouTube', { type: 'WATCHING' })
 });
 
 bot.on("guildCreate", guild => {
