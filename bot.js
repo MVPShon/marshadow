@@ -22,6 +22,29 @@ bot.on("message", async message => {
     let messsageArray = message.content.split(" ");
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
+    
+        if(message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "search"))) ){
+        var google = require("google");
+         google.resultsPerPage = 1
+         var nextCounter = 0
+         google(`${args.join(" ")}`, function (err, res){
+             var link = res.links[0];
+             if(!link) return message.reply("No results found for your search!");
+             if(!link.link === "null") return message.reply("There is no link for this!");
+             if(!link.title === "null") return message.reply("There is no title for this!");
+             if(!link.description) return message.reply("There is no description for this!");
+             console.log(link);
+             let Embed = new Discord.RichEmbed()
+             .setAuthor("Google Search", bot.user.displayAvatarURL)
+             .setColor("RANDOM")
+             .setTitle(`Result for: ${args.join(" ")}`)
+             .addField("Title:", link.title)
+             .addField("Description:", link.description)
+             .addField("Link:", link.link)
+             message.channel.send(Embed)
+             });
+     }
+
 
 
     if (message.content.startsWith(prefix + "servers")) {
