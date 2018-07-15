@@ -45,7 +45,19 @@ bot.on("message", async message => {
              });
      }
 
-
+        if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud")) ){
+            var webdict = require('webdict');
+            webdict('urbandictionary', `${args.join(" ")}`)
+            .then(response => {
+                let Embed = new Discord.RichEmbed()
+                .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
+                .setColor("RANDOM")
+                .setTitle(`Result for: ${args[0]}`)
+                .addField("Definition:", response.definition)
+                message.channel.send(Embed)
+                });
+            }
+    
 
     if (message.content.startsWith(prefix + "servers")) {
         var list = bot.guilds.array().sort();
@@ -246,8 +258,8 @@ bot.on("message", async message => {
         message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.");
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`google` - Searches Google for your terms. Aliases `g2, search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
-        message.author.send("NSFW Commands: `rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
+        message.author.send("My current commands are: \n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g2, search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+        message.author.send("NSFW Commands: \n`rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
