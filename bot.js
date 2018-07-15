@@ -40,7 +40,7 @@ bot.on("message", async message => {
              .setTitle(`Result for: ${args.join(" ")}`)
              .addField("Title:", link.title)
              .addField("Description:", link.description)
-             .addField("Link:", link.link)
+             .setFooter(link.link)
              message.channel.send(Embed)
              });
      }
