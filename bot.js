@@ -465,6 +465,7 @@ bot.on("message", async message => {
             message.channel.send(embed)
         });
     }
+}) 
 bot.login(process.env.BOT_TOKEN); //Between the "" put your bot token
 
-//bot.login("NDYzMzY1NjA4ODY4ODA2NjY2.Diuerw.3PMZQlShKvXc-v_ilcl9CZzHgJ0"); //Between the "" put your bot token
+//bot.login("NDYzMzY1NjA4ODY4ODA2NjY2.Diuerw.3PMZQlShKvXc-v_ilcl9CZzHgJ0"); //Between the "" put your bot 
