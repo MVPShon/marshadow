@@ -70,15 +70,16 @@ bot.on("message", async message => {
         }
         
         if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud")) ){
-            var webdict = require('webdict');
-            webdict('urbandictionary', `${args.join(" ")}`)
-            .then(response => {
-                let Embed = new Discord.RichEmbed()
-                .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
-                .setColor("RANDOM")
-                .setTitle(`Result for: ${args[0]}`)
-                .addField("Definition:", response.definition)
-                message.channel.send(Embed)
+           // var webdict = require('webdict');
+           // webdict('urbandictionary', `${args.join(" ")}`)
+            //.then(response => {
+            //    let Embed = new Discord.RichEmbed()
+            //    .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
+            //    .setColor("RANDOM")
+            //    .setTitle(`Result for: ${args[0]}`)
+            //    .addField("Definition:", response.definition)
+             //   message.channel.send(Embed)
+            message.reply("This command is currently being fixed.");
                 });
             }
     
@@ -450,6 +451,9 @@ bot.on("message", async message => {
             let types = p.types; //done
             let base_stats = p.base_stats; //done
             let catchrate = p.catch_rate;
+            let location = p.location;
+            let pcate = p.categories.en;
+            let pdescrip = p.pokedex_entries.X.en;
 
             let embed = new Discord.RichEmbed()
                 .setColor("RANDOM")
@@ -459,7 +463,6 @@ bot.on("message", async message => {
                 .addField("Info", pdescrip)
                 .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
             message.channel.send(embed)
-
         });
     }
 });
