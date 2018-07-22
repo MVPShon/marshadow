@@ -452,20 +452,14 @@ bot.on("message", async message => {
             let catchrate = p.catch_rate;
 
             let embed = new Discord.RichEmbed()
-                .setAuthor("Pokédex", bot.user.displayAvatarURL)
                 .setColor("RANDOM")
-                .addField("Name:", name, true)
-                .addField("Types:", types, true)
-                .addField("Pokemon Catch Rate", catchrate, true)
-                .addField("HP:", base_stats.hp, true)
-                .addField("ATK:", base_stats.atk, true)
-                .addField("DEF:", base_stats.def, true)
-                .addField("SP ATK:", base_stats.sp_atk, true)
-                .addField("SP DEF:", base_stats.sp_def, true)
-                .addField("SPEED:", base_stats.speed, true)
-                .setImage(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`)
-                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani-shiny/${args[0]}.gif`)
+                .addField(name, "The " + pcate)
+                .addField("Type(s)", types, true)
+                .addField("Base Stats:", "HP:`" + base_stats.hp +"` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed +"`")
+                .addField("Info", pdescrip)
+                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
             message.channel.send(embed)
+
         });
     }
 });
