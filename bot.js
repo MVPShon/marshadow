@@ -152,17 +152,26 @@ bot.on("message", async message => {
     }
 
     if (message.content.startsWith(prefix + "meme")) {
-        var meme = require('memejs');
-        meme(function(data, err) {
-            if (err) return console.error(err);
-            let embed = new Discord.RichEmbed()
-                .setColor("RANDOM")
-                .setTitle(data.title[0])
-                .setImage(data.url[0])
-                .setFooter("Created on " + data.created + " by: " + data.author + ". SubReddit: " + data.subreddit)
-            message.channel.send(embed)
-        });
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'MemeEconomy',
+            'Memes',
+            'Dankmemes',
+            'Animemes',
+            'OffensiveMemes'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
     }
+
     if (message.content.startsWith(prefix + "info")) {
         let embed = new Discord.RichEmbed()
             .setTitle(`Generated Info for Uxie`)
