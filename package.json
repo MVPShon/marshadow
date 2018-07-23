@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.3.2",
+    "discord.js-musicbot-addon": "^12.0.6",
     "google": "^2.1.0",
     "kaori": "^1.1.4",
     "mal-scraper": "^2.4.2",
     "memejs": "^1.0.7",
     "oakdex-pokedex": "^0.2.2",
+    "opusscript": "0.0.6",
     "random-puppy": "^1.1.0",
     "webdict": "^0.2.2",
     "ytsearcher": "^1.1.3"
