@@ -110,6 +110,26 @@ bot.on("message", async message => {
                 });
             })
     }
+        if (message.content.startsWith(prefix + "tits")) {
+        if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'Tits',
+            'Titties',
+            'Boobs'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setFooter("Boobs <3")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
+    }
     if (message.content.startsWith(prefix + "hentai")) {
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
