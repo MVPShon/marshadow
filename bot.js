@@ -4,6 +4,15 @@ let bot = new Discord.Client();
 let prefix = "u!";
 const Kaori = require('kaori');
 const kaori = new Kaori();
+const Music = require('discord.js-musicbot-addon');
+
+Music.start(bot, {
+    youtubeKey: "AIzaSyA9BBe0ud_2h_5q9SVBvrXfRGtxwIX5WaM",
+    prefix: "u!",
+    helpCmd: "musichelp",
+    global: false,
+    disableLeave: "true"
+  });
 
 
 bot.on("ready", () => {
