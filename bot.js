@@ -41,7 +41,7 @@ bot.on("message", async message => {
                   .setFooter("Ranked " + data.ranked + " on MAL.")
                   .setURL(data.url)
                   message.channel.send(Embed)
-                  }).catch((err) => message.reply(err))
+                  }).catch((err) => message.reply("Nothing seems to have been found.. How odd :/"))
                   }
 
     
