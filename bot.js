@@ -12,10 +12,11 @@ Music.start(bot, {
     helpCmd: "musichelp",
     global: false,
     disableLeave: "true",
+    ownerOverMember: true,
     embedColor: 'DARK_RED',
     maxQueueSize: '50',
     botOwner: '168865955940794368',
-    messageHelp: 'true',
+    messageHelp: true,
     defVolume: '75'
   });
 
