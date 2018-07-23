@@ -15,6 +15,7 @@
     "mal-scraper": "^2.4.2",
     "memejs": "^1.0.7",
     "oakdex-pokedex": "^0.2.2",
+    "random-puppy": "^1.1.0",
     "webdict": "^0.2.2",
     "ytsearcher": "^1.1.3"
   }
