@@ -14,6 +14,7 @@ Music.start(bot, {
     disableLeave: "true",
     embedColor: 'DARK_RED',
     maxQueueSize: '50',
+    botOwner: '168865955940794368',
     messageHelp: 'true',
     defVolume: '75'
   });
