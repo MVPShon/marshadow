@@ -13,6 +13,7 @@
     "google": "^2.1.0",
     "kaori": "^1.1.4",
     "mal-scraper": "^2.4.2",
+    "memejs": "^1.0.7",
     "oakdex-pokedex": "^0.2.2",
     "webdict": "^0.2.2",
     "ytsearcher": "^1.1.3"
