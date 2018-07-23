@@ -5,9 +5,12 @@ let prefix = "u!";
 const Kaori = require('kaori');
 const kaori = new Kaori();
 
+
 bot.on("ready", () => {
     console.log("Ready!")
-    bot.user.setActivity('YouTube', { type: 'WATCHING' })
+    bot.user.setActivity('YouTube', {
+        type: 'WATCHING'
+    })
 });
 
 bot.on("guildCreate", guild => {
@@ -22,212 +25,258 @@ bot.on("message", async message => {
     let messsageArray = message.content.split(" ");
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
-    
-                if (message.content.startsWith(prefix + "mal ")) {
-                var malScraper = require('mal-scraper')
- 
-                var name = `${args.join(" ")}`
-                 
-                malScraper.getInfoFromName(name)
-                  .then((data) => {
-                  let Embed = new Discord.RichEmbed()
-                  .setColor("RANDOM")
-                  .setTitle(data.title)
-                  .addField("Genres", data.genres)
-                  .addField("Status", data.status + " with " +  data.episodes + " episodes.", true)
-                  .addField("Rated", data.rating, true)
-                  .addField("Summary", data.synopsis)
-                  .setThumbnail(data.picture)
-                  .setFooter("Ranked " + data.ranked + " on MAL.")
-                  .setURL(data.url)
-                  message.channel.send(Embed)
-                  }).catch((err) => message.reply("Nothing seems to have been found.. How odd :/"))
-                  }
-    
-            if (message.content.startsWith(prefix + "meme")) {
-                var meme = require('memejs');
-                meme(function(data, err) {
-                if (err) return console.error(err);
-                    let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
-                    .setTitle(data.title[0])
-                    .setImage(data.url[0])
-                    .setFooter("Created on " + data.created + " by: " + data.author + ". SubReddit: " + data.subreddit)
-                    message.channel.send(embed)
-});
-}
-    
-        if(message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "search"))) ){
-        var google = require("google");
-         google.resultsPerPage = 1
-         var nextCounter = 0
-         google(`${args.join(" ")}`, function (err, res){
-             var link = res.links[0];
-             if(!link) return message.reply("No results found for your search!");
-             if(!link.link === "null") return message.reply("There is no link for this!");
-             if(!link.title === "null") return message.reply("There is no title for this!");
-             if(!link.description) return message.reply("There is no description for this!");
-             console.log(link);
-             let Embed = new Discord.RichEmbed()
-             .setAuthor("Google Search", bot.user.displayAvatarURL)
-             .setColor("RANDOM")
-             .setTitle(`Result for: ${args.join(" ")}`)
-             .addField("Title:", link.title)
-             .addField("Description:", link.description)
-             .setFooter(link.link)
-             message.channel.send(Embed)
-             });
-     }
 
-         if (message.content.startsWith(prefix + "yt")||(message.content.startsWith(prefix + "youtube")||(message.content.startsWith(prefix + "yootoob"))) ){
-            var APIKEY = "AIzaSyB_8RLjvATBxCzSlrwQt2ghdYk0mJTjupw";
-            var QUERY = `${args.join(" ")}`; 
-            var { YTSearcher } = require('ytsearcher');
-            var ytsearcher = new YTSearcher(APIKEY);
-            ytsearcher.search(QUERY, { type: 'video' })
+    if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "search")))) {
+        var google = require("google");
+        google.resultsPerPage = 1
+        var nextCounter = 0
+        google(`${args.join(" ")}`, function(err, res) {
+            var link = res.links[0];
+            if (!link) return message.reply("No results found for your search!");
+            if (!link.link === "null") return message.reply("There is no link for this!");
+            if (!link.title === "null") return message.reply("There is no title for this!");
+            if (!link.description) return message.reply("There is no description for this!");
+            console.log(link);
+            let Embed = new Discord.RichEmbed()
+                .setAuthor("Google Search", bot.user.displayAvatarURL)
+                .setColor("RANDOM")
+                .setTitle(`Result for: ${args.join(" ")}`)
+                .addField("Title:", link.title)
+                .addField("Description:", link.description)
+                .setFooter(link.link)
+            message.channel.send(Embed)
+        });
+    }
+
+    if (message.content.startsWith(prefix + "yt") || (message.content.startsWith(prefix + "youtube") || (message.content.startsWith(prefix + "yootoob")))) {
+        var APIKEY = "AIzaSyB_8RLjvATBxCzSlrwQt2ghdYk0mJTjupw";
+        var QUERY = `${args.join(" ")}`;
+        var {
+            YTSearcher
+        } = require('ytsearcher');
+        var ytsearcher = new YTSearcher(APIKEY);
+        ytsearcher.search(QUERY, {
+                type: 'video'
+            })
             .then(searchResult => {
-              searchResult.nextPage()
-              .then(secondPage => {            
-                var page = secondPage.currentPage;
-                var videoEntry = page[1];
-                let Embed = new Discord.RichEmbed()
-                .setAuthor("YouTube Search", bot.user.displayAvatarURL)
-                .setColor("RED")
-                .setTitle(videoEntry.title)
-                .setImage(videoEntry.thumbnails.high.url)
-                .setDescription(videoEntry.description)
-                .setURL(videoEntry.url);
-                message.channel.send(Embed)
-            }).catch(err => message.reply("No results found!"));
+                searchResult.nextPage()
+                    .then(secondPage => {
+                        var page = secondPage.currentPage;
+                        var videoEntry = page[1];
+                        let Embed = new Discord.RichEmbed()
+                            .setAuthor("YouTube Search", bot.user.displayAvatarURL)
+                            .setColor("RED")
+                            .setTitle(videoEntry.title)
+                            .setImage(videoEntry.thumbnails.high.url)
+                            .setDescription(videoEntry.description)
+                            .setURL(videoEntry.url);
+                        message.channel.send(Embed)
+                    }).catch(err => message.reply("No results found!"));
             });
 
-        }
-        
-        if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud")) ){
-           // var webdict = require('webdict');
-           // webdict('urbandictionary', `${args.join(" ")}`)
-            //.then(response => {
-            //    let Embed = new Discord.RichEmbed()
-            //    .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
-            //    .setColor("RANDOM")
-            //    .setTitle(`Result for: ${args[0]}`)
-            //    .addField("Definition:", response.definition)
-             //   message.channel.send(Embed)
-            message.reply("This command is currently being fixed.");
-               // });
-            }
-    
+    }
+
+    if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud"))) {
+        // var webdict = require('webdict');
+        // webdict('urbandictionary', `${args.join(" ")}`)
+        //.then(response => {
+        //    let Embed = new Discord.RichEmbed()
+        //    .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
+        //    .setColor("RANDOM")
+        //    .setTitle(`Result for: ${args[0]}`)
+        //    .addField("Definition:", response.definition)
+        //   message.channel.send(Embed)
+        message.reply("This command is currently being fixed.");
+        // });
+    }
+    if (message.content.startsWith(prefix + "ass")) {
+        if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'Ass',
+            'Butts',
+            'DatAss',
+            'Booty'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setFooter("Booty <3")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
+    }
+    if (message.content.startsWith(prefix + "hentai")) {
+        if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'Hentai',
+            'HQHentai',
+            'Rule34'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setFooter("Hentai <3")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
+    }
+
+    if (message.content.startsWith(prefix + "meme")) {
+        var meme = require('memejs');
+        meme(function(data, err) {
+            if (err) return console.error(err);
+            let embed = new Discord.RichEmbed()
+                .setColor("RANDOM")
+                .setTitle(data.title[0])
+                .setImage(data.url[0])
+                .setFooter("Created on " + data.created + " by: " + data.author + ". SubReddit: " + data.subreddit)
+            message.channel.send(embed)
+        });
+    }
+    if (message.content.startsWith(prefix + "info")) {
+        let embed = new Discord.RichEmbed()
+            .setTitle(`Generated Info for Uxie`)
+            .setColor("RANDOM")
+            .addField(`Servers `, bot.guilds.size)
+            .addField(`Users `, bot.users.size)
+            .addField(`Channels `, bot.channels.size)
+            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact MVPShon#1664 or head to this discord server: https://discord.gg/WqVBymT"))
+        message.channel.send(embed);
+    }
+    if (message.content.startsWith(prefix + "mal ")) {
+        var malScraper = require('mal-scraper')
+
+        var name = `${args.join(" ")}`
+
+        malScraper.getInfoFromName(name)
+            .then((data) => {
+                let Embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(data.title)
+                    .addField("Genres", data.genres)
+                    .addField("Status", data.status + " with " + data.episodes + " episodes.", true)
+                    .addField("Rated", data.rating, true)
+                    .addField("Summary", data.synopsis)
+                    .setThumbnail(data.picture)
+                    .setFooter("Ranked " + data.ranked + " on MAL.")
+                    .setURL(data.url)
+                message.channel.send(Embed)
+            }).catch((err) => console.log(err))
+    }
+
+
+
 
     if (message.content.startsWith(prefix + "servers")) {
         var list = bot.guilds.array().sort();
         bot.users.get("168865955940794368").send("I am on `" + bot.guilds.size + "` servers.");
         bot.users.get("168865955940794368").send("These servers are: " + list);
     }
-        if(message.content.startsWith(prefix + "rule34") || (message.content.startsWith(prefix + "r34")) ){
-        if(!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
-        kaori.search('rule34', { tags: [`${args[0]}`], limit: 1, random: true })
-        .then(images => {(
-            console.log(images[0].common.fileURL))
-            let Embed = new Discord.RichEmbed()
-            .setAuthor("Rule34 Search", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
-            .setTitle(`Result for: ${args[0]}`)
-            .setImage(images[0].common.fileURL)
-            message.channel.send(Embed)
-        }).catch(err => message.channel.send("No image found for your search!"));
+    if (message.content.startsWith(prefix + "rule34") || (message.content.startsWith(prefix + "r34"))) {
+        if (!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
+        kaori.search('rule34', {
+                tags: [`${args[0]}`],
+                limit: 1,
+                random: true
+            })
+            .then(images => {
+                (
+                    console.log(images[0].common.fileURL))
+                let Embed = new Discord.RichEmbed()
+                    .setAuthor("Rule34 Search", bot.user.displayAvatarURL)
+                    .setColor("RANDOM")
+                    .setTitle(`Result for: ${args[0]}`)
+                    .setImage(images[0].common.fileURL)
+                message.channel.send(Embed)
+            }).catch(err => message.channel.send("No image found for your search!"));
     }
-            if(message.content.startsWith(prefix + "danbooru") || (message.content.startsWith(prefix + "db")) ){
-        if(!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
-        kaori.search('danbooru', { tags: [`${args[0]}`], limit: 1, random: true })
-        .then(images => {(
-            console.log(images[0].common.fileURL))
-            let Embed = new Discord.RichEmbed()
-            .setAuthor("Danbooru Search", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
-            .setTitle(`Result for: ${args[0]}`)
-            .setImage(images[0].common.fileURL)
-            message.channel.send(Embed)
-        }).catch(err => message.channel.send("No image found for your search!"));
-    }
-    
-    if (message.content.startsWith(prefix + "cat") || (message.content.startsWith(prefix + "kitty") || (message.content.startsWith(prefix + "neko"))) ){
-        let cats = [
-            "https://media.discordapp.net/attachments/428598131895042060/467753078750445608/01-kitten-cuteness-1.jpeg",
-            "https://media.discordapp.net/attachments/428598131895042060/467753078284615681/cat_02.jpeg",
-            "https://media.discordapp.net/attachments/428598131895042060/467753078284615680/cat-happy-cat-e1329931204797.jpeg",
-            "https://media.discordapp.net/attachments/428598131895042060/467753077840150559/cutest-kittens-in-the-world.jpeg",
-            "https://media.discordapp.net/attachments/428598131895042060/467753077840150558/large.jpeg?width=468&height=468",
-            "https://media.discordapp.net/attachments/428598131895042060/467753077282439193/1df706ae30095ad907b9046cdaae2db6.jpg?width=336&height=468",
-            "https://i.ytimg.com/vi/W-PBFMECvTE/maxresdefault.jpg",
-            "https://pbs.twimg.com/profile_images/571260078292865024/0EvP5vXn_400x400.jpeg",
-            "https://i.pinimg.com/originals/2e/18/ab/2e18ab3f71b73c6719b04c81625bb922.jpg",
-            "https://i.pinimg.com/originals/ef/cf/8d/efcf8d4e5fa7956ef8e4969650e1b6c3.jpg",
-            "https://i2.wp.com/theverybesttop10.com/wp-content/uploads/2015/07/Top-10-Cute-Cats-on-Washing-Lines-5.jpg?resize=510%2C628",
-            "https://www.bestfunnies.com/wp-content/uploads/2015/05/TOP-30-Cute-Cats-Cute-Cat-30.jpg",
-            "http://fenozi.com/wp-content/uploads/2017/04/cute-cats-6.jpg",
-            "http://allrestorans.com/wp-content/uploads/2018/05/cute-cats-images-10.jpg"
-        ]
-        let randcat = Math.floor((Math.random() * cats.length))
-        let embed = new Discord.RichEmbed()
-            .setAuthor("Neko", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
-            .setImage(`${cats[randcat]}`)
-        message.channel.send(embed)
+    if (message.content.startsWith(prefix + "danbooru") || (message.content.startsWith(prefix + "db"))) {
+        if (!message.channel.nsfw) return message.reply("This command can only be used on an NSFW channel!");
+        kaori.search('danbooru', {
+                tags: [`${args[0]}`],
+                limit: 1,
+                random: true
+            })
+            .then(images => {
+                (
+                    console.log(images[0].common.fileURL))
+                let Embed = new Discord.RichEmbed()
+                    .setAuthor("Danbooru Search", bot.user.displayAvatarURL)
+                    .setColor("RANDOM")
+                    .setTitle(`Result for: ${args[0]}`)
+                    .setImage(images[0].common.fileURL)
+                message.channel.send(Embed)
+            }).catch(err => message.channel.send("No image found for your search!"));
     }
 
-    if (message.content.startsWith(prefix + "dog") || (message.content.startsWith(prefix + "doge") || (message.content.startsWith(prefix + "pupper") || (message.content.startsWith(prefix + "puppy")))) ){
-        let dogs = [
-            "https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg?resize=768:*",
-            "https://i.ytimg.com/vi/oH_GHvcF9VM/hqdefault.jpg",
-            "https://vignette.wikia.nocookie.net/whatever-you-want/images/3/33/22-sweater-puppy.jpg/revision/latest?cb=20130804015046",
-            "https://i.pinimg.com/originals/b1/f0/5a/b1f05ae2a8c6543dea35b572107bbb58.jpg",
-            "https://i.redd.it/lgshxkmdoeez.jpg",
-            "http://geniusbeauty.com/wp-content/uploads/2015/12/dog7.jpg",
-            "https://1.bp.blogspot.com/-RptJqybVnlw/WlJzsNKhrqI/AAAAAAAB2_o/JBaZxND1y0w9eBYmsjHbXDuinVhUtGmfgCLcBGAs/s1600/cute-dogs-211-08.jpg",
-            "http://www.heroviral.com/wp-content/uploads/2016/01/dog-sleep-696x362.jpg",
-            "https://01iajxoiw1-flywheel.netdna-ssl.com/wp-content/uploads/2017/11/cute.jpg",
-            "https://cdn.closeronline.co.uk/one/media/5a0a/e767/c732/3e26/07f7/a31d/Screen%20Shot%202017-11-14%20at%2012.50.39%20PM.png?quality=50&width=960&ratio=16-9&resizeStyle=aspectfill&format=jpg",
-            "http://petface.net/wp-content/uploads/2018/07/5-mitova-petface.jpg",
-            "https://c1.staticflickr.com/5/4074/4774042333_ae1a16a287.jpg",
-            "https://www.agent.media/wp-content/uploads/2017/03/Boo-featured.jpg",
-            "https://img.buzzfeed.com/buzzfeed-static/static/2015-01/14/7/enhanced/webdr03/anigif_enhanced-15245-1421237668-6.gif",
-            "https://1funny.com/wp-content/uploads/2016/09/Funny-Puppies-And-Cute-Puppy-Videos-Compilation-2016-BEST-OF.jpg",
-            "http://fanny-pictures-site.com/wp-content/uploads/2014/11/funny-puppy-he-for-real_1.jpg"
+    if (message.content.startsWith(prefix + "cat") || (message.content.startsWith(prefix + "kitty") || (message.content.startsWith(prefix + "neko")))) {
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'Kitty',
+            'Cutecats'
         ]
-        let randdog = Math.floor((Math.random() * dogs.length))
-        let embed = new Discord.RichEmbed()
-            .setAuthor("Pupper", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
-            .setImage(`${dogs[randdog]}`)
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setFooter("Kitty <3")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
+    }
+
+    if (message.content.startsWith(prefix + "dog") || (message.content.startsWith(prefix + "doge") || (message.content.startsWith(prefix + "pupper") || (message.content.startsWith(prefix + "puppy"))))) {
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'Puppy',
+            'Cutepuppies'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setFooter("Pupper <3")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
         message.channel.send(embed)
     }
 
     if (message.content.startsWith(prefix + "food")) {
-        let food = [
-            "https://media-cdn.tripadvisor.com/media/photo-s/0b/b3/58/52/mouth-watering-food.jpg",
-            "https://image.shutterstock.com/image-photo/close-mouth-watering-flavored-fried-260nw-258246467.jpg",
-            "https://goodfood.hr/wp-content/uploads/2016/09/chicken-ciabatta.jpg",
-            "https://i0.wp.com/secretnyc.co/wp-content/uploads/2016/06/cheesesteak.jpg?resize=666%2C388&ssl=1",
-            "https://www.phxsoul.com/wp-content/uploads/2014/06/bbqribs.jpg",
-            "https://usercontent1.hubstatic.com/7572860.jpg",
-            "https://res.cloudinary.com/paleoleap/image/upload/f_auto,q_70/v1519811569/j-paleo/chorizo-spinach-omelette-main.jpg",
-            "https://lifeloveandgoodfood.com/wp-content/uploads/2016/04/Bruschetta-Waffle-Panini-1-1024x706.jpg",
-            "https://lifeloveandgoodfood.com/wp-content/uploads/2014/03/Cheesy-Chicken-Enchiladas_8801-400x600.jpg",
-            "https://foodchannelcom.files.wordpress.com/2017/08/richmond-buffalo-chicken-waffle-fries.jpg?w=1000&h=600&crop=1",
-            "http://www.sgfoodie.com/wp-content/uploads/2016/07/Truly-Test-Kitchen-Curry-Chicken-Chop-Noodle.jpg",
-            "http://blogs.kcrw.com/goodfood/wp-content/uploads/2014/03/220SmashedSteakSkewerswCherryBarbecueSauceS-1-e1396028805889.jpg",
-            "https://cdn.discordapp.com/attachments/466436909607157772/467211741952999425/a407f65.jpg",
-            "https://amp.businessinsider.com/images/551992b56da8115001dd9d1e-750-562.jpg",
-            "https://media-cdn.tripadvisor.com/media/photo-s/0a/4e/04/46/best-food-ever.jpg"
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'FoodPorn',
+            'Food'
         ]
-        let randfood = Math.floor((Math.random() * food.length))
-        let embed = new Discord.RichEmbed()
-            .setAuthor("Food", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
-            .setTitle(`Food for ${message.author.username}`)
-            .setImage(`${food[randfood]}`)
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
         message.channel.send(embed)
     }
+
     if (message.content.startsWith(prefix + "kick")) {
         if (!message.member.hasPermission("KICK_MEMBERS"))
             return message.reply("Sorry, you don't have permissions to use this!");
@@ -314,21 +363,11 @@ bot.on("message", async message => {
         message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
     }
     if (message.content.startsWith(prefix + "help")) {
-        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Type `u!commands` or `u!admin` to see what I can currently do.");
-    }
-            if (message.content.startsWith(prefix + "info")) {
-                let embed = new Discord.RichEmbed()
-            .setTitle(`Generated Info for Uxie`)
-            .setColor("RANDOM")
-            .addField(`Servers `, bot.guilds.size)
-            .addField(`Users `, bot.users.size)
-            .addField(`Channels `, bot.channels.size)
-            .addField(`Info` , ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact MVPShon#1664 or head to this discord server: https://discord.gg/WqVBymT"))
-                message.channel.send(embed);
+        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.");
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`mal` - Search for an anime! \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
-        message.author.send("NSFW Commands: \n`rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
+        message.author.send("My current commands are: \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+        message.author.send("NSFW Commands:\n`ass` - Booties of your dreams <3\n`hentai` - Brings up a random hentai image \n`rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
@@ -498,16 +537,30 @@ bot.on("message", async message => {
             let location = p.location;
             let pcate = p.categories.en;
             let pdescrip = p.pokedex_entries.X.en;
-
-            let embed = new Discord.RichEmbed()
-                .setColor("RANDOM")
-                .addField(name, "The " + pcate)
-                .addField("Type(s)", types, true)
-                .addField("Base Stats:", "HP:`" + base_stats.hp +"` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed +"`")
-                .addField("Info", pdescrip)
-                .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
-            message.channel.send(embed)
+            let abilities = p.abilities[0].name;
+            let HA = p.abilities[1].name;
+            if (!HA) {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .addField(name, "The " + pcate)
+                    .addField("Type(s)", types, true)
+                    .addField("Ability", abilities, true)
+                    .addField("Base Stats:", "HP:`" + base_stats.hp + "` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed + "`")
+                    .addField("Info", pdescrip)
+                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
+                message.channel.send(embed)
+            } else {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .addField(name, "The " + pcate)
+                    .addField("Type(s)", types, true)
+                    .addField("Abilities", abilities + "/" + HA, true)
+                    .addField("Base Stats:", "HP:`" + base_stats.hp + "` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed + "`")
+                    .addField("Info", pdescrip)
+                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
+                message.channel.send(embed)
+            }
         });
     }
-}) 
+})
 bot.login(process.env.BOT_TOKEN); //Between the "" put your bot token
