@@ -43,7 +43,19 @@ bot.on("message", async message => {
                   message.channel.send(Embed)
                   }).catch((err) => message.reply("Nothing seems to have been found.. How odd :/"))
                   }
-
+    
+            if (message.content.startsWith(prefix + "meme")) {
+                var meme = require('memejs');
+                meme(function(data, err) {
+                if (err) return console.error(err);
+                    let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(data.title[0])
+                    .setImage(data.url[0])
+                    .setFooter("Created on " + data.created + " by: " + data.author + ". SubReddit: " + data.subreddit)
+                    message.channel.send(embed)
+});
+}
     
         if(message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "search"))) ){
         var google = require("google");
