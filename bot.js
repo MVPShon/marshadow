@@ -41,7 +41,7 @@ bot.on("message", async message => {
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
 
-     if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g"))) {
+     if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "goog"))) {
         var google = require("google");
         google.resultsPerPage = 1
         var nextCounter = 0
