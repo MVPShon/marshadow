@@ -11,7 +11,11 @@ Music.start(bot, {
     prefix: "u!",
     helpCmd: "musichelp",
     global: false,
-    disableLeave: "true"
+    disableLeave: "true",
+    embedColor: 'DARK_RED',
+    maxQueueSize: '50',
+    messageHelp: 'true',
+    defVolume: '75'
   });
 
 
