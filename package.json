@@ -1,6 +1,6 @@
 {
   "name": "Uxie",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "All around Pokémon bot!",
   "main": "bot.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "discord.js": "^11.3.2",
     "google": "^2.1.0",
     "kaori": "^1.1.4",
+    "mal-scraper": "^2.4.2",
     "oakdex-pokedex": "^0.2.2",
     "webdict": "^0.2.2",
     "ytsearcher": "^1.1.3"
