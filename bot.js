@@ -195,7 +195,7 @@ bot.on("message", async message => {
                 });
             })
     }
-        if (message.content.startsWith(prefix + "edgyme")) {
+        if (message.content.startsWith(prefix + "edgy")) {
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'OffensiveMemes',
