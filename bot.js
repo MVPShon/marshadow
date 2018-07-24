@@ -55,10 +55,9 @@ bot.on("message", async message => {
             let Embed = new Discord.RichEmbed()
                 .setAuthor("Google Search", bot.user.displayAvatarURL)
                 .setColor("RANDOM")
-                .setTitle(`Result for: ${args.join(" ")}`)
-                .addField("Title:", link.title)
+                .setTitle(link.title)
                 .addField("Description:", link.description)
-                .setFooter(link.link)
+                .setUrl(link.link)
             message.channel.send(Embed)
         });
     }
