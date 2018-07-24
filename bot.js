@@ -104,13 +104,16 @@ bot.on("message", async message => {
         message.reply("This command is currently being fixed.");
         // });
     }
-    if (message.content.startsWith(prefix + "ass")) {
+    if (message.content.startsWith(prefix + "ass") || (message.content.startsWith(prefix + "butts") || (message.content.startsWith(prefix + "booty")))){
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'Ass',
             'Butts',
+            'Butt',
+            'Booties',
             'DatAss',
+            'Pawg',
             'Booty'
         ]
         var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
@@ -125,11 +128,13 @@ bot.on("message", async message => {
                 });
             })
     }
-        if (message.content.startsWith(prefix + "tits")) {
+        if (message.content.startsWith(prefix + "tits") || (message.content.startsWith(prefix + "boobs"))){
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'Tits',
+            'Nipples',
+            'Boobies',
             'Titties',
             'Boobs'
         ]
@@ -151,6 +156,7 @@ bot.on("message", async message => {
         var subreddits = [
             'Hentai',
             'HQHentai',
+            'HentaiPics',
             'Rule34'
         ]
         var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
@@ -170,8 +176,12 @@ bot.on("message", async message => {
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'MemeEconomy',
+            'BlackPeopleTwitter',
+            'bee_irl',
             'Memes',
             'Dankmemes',
+            'WholesomeMemes',
+            'Meirl',
             'Animemes',
             'OffensiveMemes'
         ]
@@ -194,7 +204,7 @@ bot.on("message", async message => {
             .addField(`Servers `, bot.guilds.size)
             .addField(`Users `, bot.users.size)
             .addField(`Channels `, bot.channels.size)
-            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact MVPShon#1664 or head to this discord server: https://discord.gg/WqVBymT"))
+            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact MVPShon#1664 or head to this discord server: https://discord.gg/RqhEj6s"))
         message.channel.send(embed);
     }
     if (message.content.startsWith(prefix + "mal ")) {
@@ -407,7 +417,7 @@ bot.on("message", async message => {
         message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
     }
     if (message.content.startsWith(prefix + "help")) {
-        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.");
+        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.\nKnown issues:\nCertain image searches pop up as blank. This is because the images are pulled off of a Subreddit and sometimes, instead of an image a video is pulled instead.\nNo u!leave command for Music. Not a problem on my part. The music module is maintaned by someone else and we have to wait on him to fix it. Which should be very soon! ^^");
     }
     if (message.content.startsWith(prefix + "commands")) {
         message.author.send("My current commands are: \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
