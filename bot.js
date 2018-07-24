@@ -182,8 +182,24 @@ bot.on("message", async message => {
             'Dankmemes',
             'WholesomeMemes',
             'Meirl',
-            'Animemes',
-            'OffensiveMemes'
+            'Animemes'
+        ]
+        var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
+        randomPuppy(sub)
+            .then(url => {
+                let embed = new Discord.RichEmbed()
+                    .setColor("RANDOM")
+                    .setImage(url);
+                message.channel.send({
+                    embed
+                });
+            })
+    }
+        if (message.content.startsWith(prefix + "edgyme")) {
+        var randomPuppy = require('random-puppy');
+        var subreddits = [
+            'OffensiveMemes',
+            'Edgy'
         ]
         var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
         randomPuppy(sub)
@@ -420,7 +436,7 @@ bot.on("message", async message => {
         message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.\nKnown issues:\nCertain image searches pop up as blank. This is because the images are pulled off of a Subreddit and sometimes, instead of an image a video is pulled instead.\nNo u!leave command for Music. Not a problem on my part. The music module is maintaned by someone else and we have to wait on him to fix it. Which should be very soon! ^^");
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
+        message.author.send("My current commands are: \n`meme` or `edgy` - Pulls a random meme off of Reddit! \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
         message.author.send("For all music related commands please type `u!musichelp`");
         message.author.send("NSFW Commands:\n`ass` - Booties of your dreams <3\n`hentai` - Brings up a random hentai image \n`rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
     }
