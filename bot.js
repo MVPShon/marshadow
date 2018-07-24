@@ -199,7 +199,7 @@ bot.on("message", async message => {
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'OffensiveMemes',
-            'Edgy'
+            'ImGoingToHellForThis'
         ]
         var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
         randomPuppy(sub)
