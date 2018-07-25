@@ -41,7 +41,7 @@ bot.on("message", async message => {
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
 
-     if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "goog"))) ){
+    if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "goog"))) ){
         var google = require("google");
         google.resultsPerPage = 1
         var nextCounter = 0
@@ -57,11 +57,11 @@ bot.on("message", async message => {
                 .setColor("RANDOM")
                 .setTitle(link.title)
                 .addField("Description:", link.description)
-                .setUrl(link.link)
+                .setURL(link.link)
             message.channel.send(Embed)
         });
     }
-
+    
     if (message.content.startsWith(prefix + "yt") || (message.content.startsWith(prefix + "youtube") || (message.content.startsWith(prefix + "yootoob")))) {
         var APIKEY = "AIzaSyB_8RLjvATBxCzSlrwQt2ghdYk0mJTjupw";
         var QUERY = `${args.join(" ")}`;
