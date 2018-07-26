@@ -18,7 +18,7 @@ Music.start(bot, {
     botOwner: '168865955940794368',
     messageHelp: "true",
     defVolume: '45'
-  });
+});
 
 
 bot.on("ready", () => {
@@ -41,7 +41,7 @@ bot.on("message", async message => {
     let command = messsageArray[0];
     let args = messsageArray.slice(1);
 
-    if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "goog"))) ){
+    if (message.content.startsWith(prefix + "google") || (message.content.startsWith(prefix + "g") || (message.content.startsWith(prefix + "goog")))) {
         var google = require("google");
         google.resultsPerPage = 1
         var nextCounter = 0
@@ -61,7 +61,7 @@ bot.on("message", async message => {
             message.channel.send(Embed)
         });
     }
-    
+
     if (message.content.startsWith(prefix + "yt") || (message.content.startsWith(prefix + "youtube") || (message.content.startsWith(prefix + "yootoob")))) {
         var APIKEY = "AIzaSyB_8RLjvATBxCzSlrwQt2ghdYk0mJTjupw";
         var QUERY = `${args.join(" ")}`;
@@ -103,7 +103,7 @@ bot.on("message", async message => {
         message.reply("This command is currently being fixed.");
         // });
     }
-    if (message.content.startsWith(prefix + "ass") || (message.content.startsWith(prefix + "butts") || (message.content.startsWith(prefix + "booty")))){
+    if (message.content.startsWith(prefix + "ass") || (message.content.startsWith(prefix + "butts") || (message.content.startsWith(prefix + "booty")))) {
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
         var subreddits = [
@@ -127,7 +127,7 @@ bot.on("message", async message => {
                 });
             })
     }
-        if (message.content.startsWith(prefix + "tits") || (message.content.startsWith(prefix + "boobs"))){
+    if (message.content.startsWith(prefix + "tits") || (message.content.startsWith(prefix + "boobs"))) {
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
         var subreddits = [
@@ -194,7 +194,7 @@ bot.on("message", async message => {
                 });
             })
     }
-        if (message.content.startsWith(prefix + "edgy")) {
+    if (message.content.startsWith(prefix + "edgy")) {
         var randomPuppy = require('random-puppy');
         var subreddits = [
             'OffensiveMemes',
