@@ -226,7 +226,7 @@ bot.on("message", async message => {
             .addField(`Users `, bot.users.size)
             .addField("Uptime", uptime)
             .setThumbnail(bot.user.displayAvatarURL)
-            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact MVPShon#1664 or head to this discord server: https://discord.gg/WqVBymT"))
+            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact `MVPShon#1664` or head to this discord server: https://discord.gg/tT8aZjJ"))
         message.channel.send(embed);
     }
     if (message.content.startsWith(prefix + "mal ")) {
