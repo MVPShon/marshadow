@@ -18,6 +18,7 @@
     "oakdex-pokedex": "^0.2.2",
     "opusscript": "0.0.6",
     "random-puppy": "^1.1.0",
+    "weather-js": "^2.0.0",
     "webdict": "^0.2.2",
     "ytsearcher": "^1.1.3"
   }
