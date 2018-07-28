@@ -263,7 +263,7 @@ if (message.content.startsWith(prefix + "weather")) {
                     .addField("Genres", data.genres)
                     .addField("Status", data.status + " with " + data.episodes + " episodes.", true)
                     .addField("Rated", data.rating, true)
-                    .addField("Summary", data.synopsis)
+                    .addField("Summary", data.synopsis.slice(0,1021) + "...")
                     .setThumbnail(data.picture)
                     .setFooter("Ranked " + data.ranked + " on MAL.")
                     .setURL(data.url)
