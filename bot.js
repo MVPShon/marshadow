@@ -655,7 +655,7 @@ if (message.content.startsWith(prefix + "weather")) {
                     .addField("Abilities", abilities + "/" + HA, true)
                     .addField("Base Stats:", "HP:`" + base_stats.hp + "` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed + "`")
                     .addField("Info", pdescrip)
-                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
+                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args.join(" ").toLowerCase().replace(/ /g, "").replace(/./g, "")}.gif`, true)
                 message.channel.send(embed)
             }
         });
