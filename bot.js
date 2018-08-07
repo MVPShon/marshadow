@@ -1,32 +1,200 @@
 const Discord = require("discord.js");
 oakdexPokedex = require('oakdex-pokedex');
+fs = require("fs"),
+    jsonfile = require("jsonfile"),
+    path = require("path"),
+    request = require("request"),
+    colors = require('colors'),
+    italics = require('./data/italics.js'),
+    requireFromUrl = require('require-from-url');
+var config = require('./config.js'),
+    otherAliases = require('./data/otherAliases.js'),
+    imageCheck,
+    dex = require('./data/pokedex.js').BattlePokedex,
+    species = [],
+    aliases = require('./data/aliases.js').BattleAliases;
+Object.keys(dex).map(function(key, index) {
+    species.push(dex[key].species.toLowerCase());
+});
 let bot = new Discord.Client();
 let prefix = "u!";
 const Kaori = require('kaori');
 const kaori = new Kaori();
 const Music = require('discord.js-musicbot-addon');
+const API = require('lol-stats-api-module');
+const api = new API({
+        key: 'RGAPI-0b949cf9-f8c8-48ae-941b-2f196696225f',
+        region: 'na'
+    });
+  console.log("Starting bot...");
 
-Music.start(bot, {
-    youtubeKey: "AIzaSyA9BBe0ud_2h_5q9SVBvrXfRGtxwIX5WaM",
-    prefix: "u!",
-    helpCmd: "musichelp",
-    global: false,
-    disableLeave: "true",
-    ownerOverMember: true,
-    embedColor: 'DARK_RED',
-    maxQueueSize: '50',
-    botOwner: '168865955940794368',
-    messageHelp: "true",
-    defVolume: '45'
-});
-
-
-bot.on("ready", () => {
-    console.log("Ready!")
-    bot.user.setActivity('YouTube', {
-        type: 'WATCHING'
-    })
-});
+  var commands = loadCommands(); // Load commands into the commands object
+  
+  bot.on("ready", function() {
+      console.log((bot.user.username +" is active! Currently serving in " + String(bot.guilds.size).white + " guilds.\n".green).bold);
+      bot.user.setActivity('with local Pokemon at the Park!'); //Set "playing" status on the user's profile
+  
+  
+  });
+  
+  function loadCommands() {
+      console.log('Loading commands...'.cyan);
+      let commands = {}, // Initialize values
+          errCount = 0;
+      cmdfiles = fs.readdirSync('./commands/'); // Read files in the commands directory
+      cmdfiles.forEach(filename => {
+          var cmdName = filename.split('.')[0];
+          try { // Attempt to load the command into the bot
+              commands[cmdName] = require('./commands/' + filename);
+              console.log('Loaded '.green + cmdName.yellow.bold);
+          } catch (err) { // If unsuccessful, display an error
+              if (err) {
+                  errCount++;
+                  console.log('Error in '.red + cmdName.yellow + '!'.red + '\n' + err.stack);
+              }
+          }
+      });
+      console.log('Loaded commands with '.cyan + (errCount > 0 ? errCount.toString().red : 'no'.green) + ` error${errCount == 1? '' : 's'}!`.cyan); // Print number of errored commands, if any.
+      return commands;
+  }
+  
+  
+  bot.on("message", msg => { // Fires when a message is sent that can be detected by bot
+      if (msg.author.id != bot.user.id && !msg.author.bot) { // Ensures bot doesn't detect messages from bots or itself 
+          if (msg.content.startsWith(config.prefix)) { // Check to see if the message is an attempted command
+              let commandstring = msg.content.substring(config.prefix.length),
+                  cmd = commandstring.split(" ")[0], // Split the message into more readable argument/command portions
+                  args = commandstring.substring(cmd.length + 1);
+  
+              if (commands[cmd]) { // If a command by the name of the attempted name exists, try to fire it
+                  try {
+                      commands[cmd].action(msg, args, bot);
+                  } catch (err) {
+                      console.error(err); // If unsuccessful, log the error.
+                  }
+                  // TO MOVE TO SEPARATE FILES
+              } else if (cmd == "obtain") {
+                  msg.channel.send("Honestly, just use Bulbapedia. The encounter data on the web is so inconsistent and undreadable that there's no way I could create an obtainability command. Sorry about that. 🙁");
+              } else if (cmd == "deathbird") {
+                  msg.channel.send('', {
+                      file: "https://i.imgur.com/pIxQQXA.png",
+                      name: "DEATHBIRD.png"
+                  });
+              } else if (cmd == "youtried") {
+                  msg.channel.send('', {
+                      file: "https://i.imgur.com/bAxMdQ0.png",
+                      name: "Filename.jpeg.gif.webp.mp4.exe.bat.sh.app.png"
+                  });
+              } else if (msg.author.id == 120887602395086848) { // Commands only to be fired by the bot's owner
+                  if (cmd == 'eval') {
+                      try {
+                          msg.channel.send("", {
+                              embed: {
+                                  title: '🖥 JavaScript Eval',
+                                  fields: [{
+                                          name: "Input",
+                                          value: args
+                                      },
+                                      {
+                                          name: "Output",
+                                          value: String(eval(args)) // jshint ignore:line
+                                      }
+                                  ],
+                                  color: 5561189
+                              }
+                          });
+                      } catch (err) {
+                          msg.channel.send("", {
+                              embed: {
+                                  title: '⚠ Error',
+                                  fields: [{
+                                          name: "Input",
+                                          value: args
+                                      },
+                                      {
+                                          name: "Error",
+                                          value: err.toString()
+                                      }
+                                  ],
+                                  color: 16724015
+                              }
+                          });
+                      }
+                  }
+              }
+          } else if (msg.content == bot.user) {
+              msg.react(bot.emojis.get('168865955940794368'))
+                  .catch(console.error)
+          } else { // If a command was fired, do not check for italics in the messsage.
+              checkItalics(msg);
+          }
+      }
+  });
+  
+  
+  function capitalizeFirstLetter(string) { // Simple function to capitalize the first letter in a string.
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  
+  function checkItalics(msg) { // Function to be fired if a message is valid for italicization checking
+      let isFound = false,
+          pokePast = [],
+          pokeCount = 0,
+          splits = [msg.content.replace(/#/g, '').replace(/\?/g, '').split("*"), msg.content.replace(/#/g, '').replace(/\?/g, '').split("_")];
+      var pokeName;
+      for (let j = 0; j < 2; j++) {
+          if (isFound) return;
+          for (var i = 1; i < splits[j].length - 1; i++) { // Check each substring between asterixes/underscores
+              pokeName = splits[j][i].toLowerCase();
+              if (italics[pokeName]) {
+                  if (pokeCount > 1) break;
+                  if (pokePast.indexOf(pokeName) != -1) continue;
+                  pokePast.push(pokeName);
+                  pokeCount++;
+                  italics[pokeName].action(msg);
+                  isFound = true;
+                  continue;
+              }
+              let isShiny = false, // Sprite defaults to a non-shiny version
+                  urlBuild = 'https://play.pokemonshowdown.com/sprites/xyani/', // Default constructor for a sprite
+                  a = otherAliases.aliases(msg.guild.id);
+              for (let r in a) {
+                  if (pokeName.startsWith(r)) pokeName = pokeName.replace(`${r} `, `${a[r]} `);
+                  if (pokeName.endsWith(r)) pokeName = pokeName.replace(` ${r}`, ` ${a[r]}`);
+                  if (pokeName == r) pokeName = a[r];
+                  if (pokeName.indexOf(` ${r} `) > -1) pokeName = pokeName.replace(` ${r} `, ` ${a[r]} `);
+              }
+              if (pokeName.split(" ")[0] == "mega") {
+                  pokeName = pokeName.substring(pokeName.split(" ")[0].length + 1) + "-mega";
+              } else if (pokeName.split(' ')[0] == "alolan") {
+                  pokeName = pokeName.substring(pokeName.split(" ")[0].length + 1) + "-alola";
+              }
+              if (pokeName.indexOf('shiny') != -1) { // Detect if the potential pokemon is a shiny
+                  isShiny = true;
+                  pokeName = pokeName.replace(' shiny', '').replace('shiny ', '').replace('-shiny', '').replace('shiny-', '').replace('shiny', '');
+  
+              }
+              pokeName = pokeName.replace(" ", "-");
+              let imgPoke = pokeName.toLowerCase();
+              if (pokeCount > 1) break;
+              if (pokePast.indexOf(imgPoke) != -1) continue;
+              pokePast.push(imgPoke);
+              if (species.indexOf(imgPoke) > -1) pokeCount++;
+              if (isShiny) urlBuild = 'https://play.pokemonshowdown.com/sprites/xyani-shiny/';
+              /* jshint ignore:start */
+              request(urlBuild + imgPoke + ".gif", (err, response) => { // Check to see if the sprite for the desired Pokemon exists
+                  if (!err && response.statusCode == 200) {
+                      msg.channel.send('', { // If it does, send it  
+                          file: response.request.href
+                      });
+                      isFound = true;
+                  }
+              });
+              /* jshint ignore:end */
+              if (isFound) break;
+          }
+      }
+  }
 
 bot.on("guildCreate", guild => {
     bot.users.get("168865955940794368").send("`" + guild.owner.user.username + "` has just added me to their server: `" + guild.name + "`");
@@ -34,6 +202,7 @@ bot.on("guildCreate", guild => {
 bot.on("guildDelete", guild => {
     bot.users.get("168865955940794368").send("`" + guild.owner.user.username + "` has just removed me from their server: `" + guild.name + "`");
 });
+
 
 
 bot.on("message", async message => {
@@ -54,7 +223,7 @@ bot.on("message", async message => {
             console.log(link);
             let Embed = new Discord.RichEmbed()
                 .setAuthor("Google Search", bot.user.displayAvatarURL)
-                .setColor("RANDOM")
+                .setColor(0xfcf11e)
                 .setTitle(link.title)
                 .addField("Description:", link.description)
                 .setURL(link.link)
@@ -111,19 +280,6 @@ if (message.content.startsWith(prefix + "weather")) {
       message.channel.send(Embed)
     });
 }
-    if (message.content.startsWith(prefix + "urbandictionary") || (message.content.startsWith(prefix + "ud"))) {
-        // var webdict = require('webdict');
-        // webdict('urbandictionary', `${args.join(" ")}`)
-        //.then(response => {
-        //    let Embed = new Discord.RichEmbed()
-        //    .setAuthor("Urban Dictionary Search", bot.user.displayAvatarURL)
-        //    .setColor("RANDOM")
-        //    .setTitle(`Result for: ${args[0]}`)
-        //    .addField("Definition:", response.definition)
-        //   message.channel.send(Embed)
-        message.reply("This command is currently being fixed.");
-        // });
-    }
     if (message.content.startsWith(prefix + "ass") || (message.content.startsWith(prefix + "butts") || (message.content.startsWith(prefix + "booty")))) {
         if (!message.channel.nsfw) return message.reply("🔞 This command can only be used on an NSFW Channel! 🔞")
         var randomPuppy = require('random-puppy');
@@ -140,7 +296,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setFooter("Booty <3")
                     .setImage(url);
                 message.channel.send({
@@ -162,7 +318,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setFooter("Boobs <3")
                     .setImage(url);
                 message.channel.send({
@@ -183,7 +339,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setFooter("Hentai <3")
                     .setImage(url);
                 message.channel.send({
@@ -208,7 +364,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setImage(url);
                 message.channel.send({
                     embed
@@ -225,7 +381,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setImage(url);
                 message.channel.send({
                     embed
@@ -241,16 +397,19 @@ if (message.content.startsWith(prefix + "weather")) {
         let seconds = Math.round(totalSeconds % 60);
         let uptime = `${hours} hours, ${minutes} minutes and ${seconds} second(s).`;
         let embed = new Discord.RichEmbed()
-            .setTitle(`Generated Info for Uxie`)
-            .setColor("RANDOM")
-            .addField(`Servers `, bot.guilds.size)
-            .addField(`Users `, bot.users.size)
+            .setAuthor(`Generated Stats`)
+            .setColor(0xfcf11e)
+            .addField("Name", bot.user.tag, true)
+            .addField("Bot Owner", bot.users.get("168865955940794368").tag, true)
+            .addField(`Servers `, bot.guilds.size, true)
+            .addField(`Users `, bot.users.size, true)
             .addField("Uptime", uptime)
+            .addField("Ping", new Date().getTime() - message.createdTimestamp + " ms.")
+            .addField("Description", "Multi-functional, ever growing bot based off of the character `Evileye` from the Overlord anime series. Constantly being updated daily with more cool, exciting stuff for you to enjoy!")
+            .addField("Important Links", "Discord Server: https://discord.gg/tT8aZjJ")
             .setThumbnail(bot.user.displayAvatarURL)
-            .addField(`Info`, ("I was originally created to be a simple functioning Pokédex but I have currently grown into what I am now! If you're having any problems with me, please contact `MVPShon#1664` or head to this discord server: https://discord.gg/tT8aZjJ"))
         message.channel.send(embed);
-    }
-    if (message.content.startsWith(prefix + "mal ")) {
+    }    if (message.content.startsWith(prefix + "mal ")) {
         var malScraper = require('mal-scraper')
 
         var name = `${args.join(" ")}`
@@ -258,7 +417,7 @@ if (message.content.startsWith(prefix + "weather")) {
         malScraper.getInfoFromName(name)
             .then((data) => {
                 let Embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setTitle(data.title)
                     .addField("Genres", data.genres)
                     .addField("Status", data.status + " with " + data.episodes + " episodes.", true)
@@ -291,7 +450,7 @@ if (message.content.startsWith(prefix + "weather")) {
                     console.log(images[0].common.fileURL))
                 let Embed = new Discord.RichEmbed()
                     .setAuthor("Rule34 Search", bot.user.displayAvatarURL)
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setTitle(`Result for: ${args[0]}`)
                     .setImage(images[0].common.fileURL)
                 message.channel.send(Embed)
@@ -309,7 +468,7 @@ if (message.content.startsWith(prefix + "weather")) {
                     console.log(images[0].common.fileURL))
                 let Embed = new Discord.RichEmbed()
                     .setAuthor("Danbooru Search", bot.user.displayAvatarURL)
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setTitle(`Result for: ${args[0]}`)
                     .setImage(images[0].common.fileURL)
                 message.channel.send(Embed)
@@ -326,7 +485,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setFooter("Kitty <3")
                     .setImage(url);
                 message.channel.send({
@@ -345,7 +504,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setFooter("Pupper <3")
                     .setImage(url);
                 message.channel.send({
@@ -365,7 +524,7 @@ if (message.content.startsWith(prefix + "weather")) {
         randomPuppy(sub)
             .then(url => {
                 let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
+                    .setColor(0xfcf11e)
                     .setImage(url);
                 message.channel.send({
                     embed
@@ -388,7 +547,7 @@ if (message.content.startsWith(prefix + "weather")) {
             .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
         let embed = new Discord.RichEmbed()
             .setAuthor("Kick", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
+            .setColor(0xfcf11e)
             .setTitle(`${member.user.tag} has been kicked by ${message.author.tag}.`)
             .setFooter(`${member.user.tag} has been cucked! I mean kicked.`)
             .addField(`Reason:`, `${reason}`)
@@ -425,7 +584,7 @@ if (message.content.startsWith(prefix + "weather")) {
             .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
         let embed = new Discord.RichEmbed()
             .setAuthor("Ban", bot.user.displayAvatarURL)
-            .setColor("RANDOM")
+            .setColor(0xfcf11e)
             .setTitle(`${member.user.tag} has been banned by ${message.author.tag}.`)
             .setFooter(`${member.user.tag} has been banned.`)
             .addField(`Reason:`, `${reason}`)
@@ -460,12 +619,72 @@ if (message.content.startsWith(prefix + "weather")) {
         message.channel.send(new Date().getTime() - message.createdTimestamp + " ms.");
     }
     if (message.content.startsWith(prefix + "help")) {
-        message.channel.send("I am a bot created by MVPShon for many various uses. My prefix is `u!` Currently, there aren't many things I can do but I keep growing and expanding each day. For the moment, type `u!commands` or `u!admin` to see what I can currently do.\nKnown issues:\nCertain image searches pop up as blank. This is because the images are pulled off of a Subreddit and sometimes, instead of an image a video is pulled instead.\nNo u!leave command for Music. Not a problem on my part. The music module is maintaned by someone else and we have to wait on him to fix it. Which should be very soon! ^^");
+        let embed = new Discord.RichEmbed()
+            .setAuthor(`Help`)
+            .setColor(0xfcf11e)
+            .addField("Info", "To find basic info on the bot, just type `" + prefix + "info`")
+            .addField("Commands", "Type `" + prefix + "commands` for a list of all commands.")
+        message.channel.send(embed)
     }
     if (message.content.startsWith(prefix + "commands")) {
-        message.author.send("My current commands are: \n`mal` - Search for a specific anime's info off of MyAnimeList! \n`meme` or `edgy` - Pulls a random meme off of Reddit! \n`yt` or `youtube` - Brings up a link to a video based on your terms.\n`urbandictionary` or `ud` - Defines a word as according to Urban Dictionary.\n`google` - Searches Google for your terms. Aliases `g`, `search`. Usage: `u!google cat`\n`dog` - Shows a random image of a dog! Aliases (`pupper, doge, puppy`)\n`cat` - Shows a random image of a cat! Aliases (`kitty, neko`)\n`roast` - Insult your friends with my ever-growing list of roasts and insults!\n`copy` - Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.\n`pokedex` or `dex` - Brings up a Pokemon's stats. Putting the Pokemon's name in lowercase will also show a picture!");
-        message.author.send("For all music related commands please type `u!musichelp`");
-        message.author.send("NSFW Commands:\n`ass` - Booties of your dreams <3\n`hentai` - Brings up a random hentai image \n`rule34` or `r34` - Shows a hentai image based on your search terms. Usage: `u!rule34 slime`\n`danbooru` or `db` - Shows a hentai image based on your search terms. Usage: `u!danbooru slime`");
+        let embed = new Discord.RichEmbed()
+        .setThumbnail(bot.user.displayAvatarURL)
+        .setColor(0xfcf11e)
+        .addField("Youtube/YT","Brings up a link to a video based on your terms.")
+        .addField("MAL","Search for a specific anime's info off of MyAnimeList!")
+        .addField("Meme/Edgy","Pulls a random meme off of Reddit!")
+        .addField("Dog","Shows a random image of a dog! Aliases (`pupper, doge, puppy`)")
+        .addField("Cat","Shows a random image of a cat! Aliases (`kitty, neko`)")
+        .addField("Roast","Insult your friends with my ever-growing list of roasts and insults!")
+        .addField("Copy","Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.")
+        .addField("Dex","Brings up a Pokemon's information and stats!")
+        .addField("Ability","Explains a specific Pokemon ability.")
+        .addField("Item","Explains a specific Pokemon item")
+        .addField("Invite","Provides a link to invite " + bot.user.username + " to your server.")
+        .addField("Move","Provides information on a Pokemon move")
+        .addField("Roll","Roll the die.")
+        .addField("Type","Provides type information for a Pokemon type.")
+        .addField("User-info","Provides detailed information about the user mentioned.")
+        .setFooter("For all music related commands type: " + prefix + "musichelp | For all admin commands type: |For all NSFW commands type: " + prefix + "nsfw")
+        message.channel.send(embed)
+    }
+    if (message.content.startsWith(prefix + "admin")) {
+        let embed = new Discord.RichEmbed()
+            .setAuthor(`ADMIN Commands for ` + bot.user.username)
+            .setColor(0xfcf11e)
+            .setThumbnail(bot.user.displayAvatarURL)
+            .addField("Ban", "Bans someone from your server. `Usage: " + prefix + "ban Evileye`")
+            .addField("Kick", "Kicks someone from your server. `Usage: " + prefix + "kick Evileye`")
+            .addField("Purge/Delete", "Purges/deletes up to 100 messages from chat. `Usage: " + prefix + "purge 50`")
+        message.channel.send(embed)
+    }
+
+    if (message.content.startsWith(prefix + "nsfw")) {
+        let embed = new Discord.RichEmbed()
+            .setAuthor(`NSFW Commands for ` + bot.user.username)
+            .setColor(0xfcf11e)
+            .setThumbnail(bot.user.displayAvatarURL)
+            .addField("Ass","Booties of your dreams <3. Aliases (`butts, booty`)")
+            .addField("Tits","Tits galore. Alias (`boobs`)")
+            .addField("Danbooru","Searches Danbooru for hentai tags.")
+            .addField("Hentai", "Pulls a random hentai picture off of Reddit.")
+            .addField("Rule34/R34", "Searches https://rule34.xxx for hentai tags. `Usage: " + prefix + "rule34 Evileye` *Note - Spaces are represented as UNDERSCORES on the R34 website*")
+        message.author.send(embed)
+    }
+    if (message.content.startsWith(prefix + "musichelp")) {
+        let embed = new Discord.RichEmbed()
+            .setAuthor(`Music Commands for ` + bot.user.username)
+            .setColor(0xfcf11e)
+            .setThumbnail(bot.user.displayAvatarURL)
+            .addField("Add", "Adds a song using a specific link to the queue. `Usage: " + prefix + "add https://www.youtube.com/watch?v=3WSgJCYIewM`")
+            .addField("Join", "Joins the bot to your music channel. `Usage: " + prefix + "join #MusicChannel`")
+            .addField("Pause", "Pauses the currently playing song.")
+            .addField("Play", "Plays the songs you've added to the queue.")
+            .addField("Queue", "Shows the currently queued songs")
+            .addField("Resume", "Resumes a song if paused.")
+            .addField("Search", "Searches for a song by name. You can type `" + prefix + "play` to immediately play/add the searched song. `Usage: " + prefix + "search In My Feelings Drake`")
+            .addField("Skip", "Skips the currently playing song.")
+        message.channel.send(embed)
     }
     if (message.content.startsWith(prefix + "admin")) {
         message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
@@ -608,7 +827,7 @@ if (message.content.startsWith(prefix + "weather")) {
         if (args[0]) {
             let embed = new Discord.RichEmbed()
                 .setAuthor("Roast", bot.user.displayAvatarURL)
-                .setColor("RANDOM")
+                .setColor(0xfcf11e)
                 .setTitle(`${targetUser.user.username} ${insults[result]}`)
                 .setFooter("How does it feel getting roasted by a bot?")
             message.channel.send(embed)
@@ -617,48 +836,11 @@ if (message.content.startsWith(prefix + "weather")) {
         if (!args[0]) {
             let embed = new Discord.RichEmbed()
                 .setAuthor("Roast", bot.user.displayAvatarURL)
-                .setColor("RANDOM")
+                .setColor(0xfcf11e)
                 .setTitle(`${message.author.username} ${insults[result]}`)
                 .setFooter("How does it feel getting roasted by a bot?")
             message.channel.send(embed)
         }
     }
-    if (message.content.startsWith(prefix + "dex") || (message.content.startsWith(prefix + "pokedex"))) {
-        String.prototype.capitalize = function() {
-            return this.charAt(0).toUpperCase() + this.slice(1);
-        }
-        oakdexPokedex.findPokemon(`${args[0].capitalize()}`, function(p) {
-            let name = p.names.en; //done
-            let types = p.types; //done
-            let base_stats = p.base_stats; //done
-            let catchrate = p.catch_rate;
-            let location = p.location;
-            let pcate = p.categories.en;
-            let pdescrip = p.pokedex_entries.X.en;
-            let abilities = p.abilities[0].name;
-            let HA = p.abilities[1].name;
-            if (!HA) {
-                let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
-                    .addField(name, "The " + pcate)
-                    .addField("Type(s)", types, true)
-                    .addField("Ability", abilities, true)
-                    .addField("Base Stats:", "HP:`" + base_stats.hp + "` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed + "`")
-                    .addField("Info", pdescrip)
-                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args[0]}.gif`, true)
-                message.channel.send(embed)
-            } else {
-                let embed = new Discord.RichEmbed()
-                    .setColor("RANDOM")
-                    .addField(name, "The " + pcate)
-                    .addField("Type(s)", types, true)
-                    .addField("Abilities", abilities + "/" + HA, true)
-                    .addField("Base Stats:", "HP:`" + base_stats.hp + "` ATK:`" + base_stats.atk + "` DEF:`" + base_stats.def + "` SP ATK:`" + base_stats.sp_atk + "` SP DEF:`" + base_stats.sp_def + "` SPEED:`" + base_stats.speed + "`")
-                    .addField("Info", pdescrip)
-                    .setThumbnail(`https://play.pokemonshowdown.com/sprites/xyani/${args.join(" ").toLowerCase().replace(/ /g, "").replace(/./g, "")}.gif`, true)
-                message.channel.send(embed)
-            }
-        });
-    }
 })
-bot.login(process.env.BOT_TOKEN); //Between the "" put your bot token
+bot.login(process.env.BOT_TOKEN);
