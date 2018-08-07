@@ -186,6 +186,7 @@ module.exports.action = (msg, args) => {
             totalStats += pokeEntry.baseStats[i];
         }
         var dexEmbed = {
+            title: capitalizeFirstLetter(poke),
             color: embedColours[pokeEntry.color],
             fields: [{
                     name: typestring,
@@ -245,7 +246,7 @@ module.exports.action = (msg, args) => {
             }
         };
         console.log(`Sending ${poke} dex to guild ${msg.guild.name}`);
-        msg.channel.send("\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\n**" + capitalizeFirstLetter(poke) + "**", {
+        msg.channel.send({
                 embed: dexEmbed
             })
             .catch(console.error);
