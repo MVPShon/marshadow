@@ -60,8 +60,9 @@ module.exports.action = (msg, args) => {
             abilityDesc = ability.shortDesc;
         }
         console.log(`Sending Ability ${ability.name} to guild ${msg.guild.name}`);
-        msg.channel.send("\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\n**" + capitalizeFirstLetter(ability.name) + "**", {
+        msg.channel.send({
             embed: {
+                title: capitalizeFirstLetter(ability.name),
                 color: 0xfcf11e,
                 fields: [{
                         name: "Description",
