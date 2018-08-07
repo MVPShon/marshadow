@@ -1,9 +1,3 @@
-const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL, bot);
-
-dbl.on("posted", () => {
-  console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
-});
 const Discord = require("discord.js");
 oakdexPokedex = require('oakdex-pokedex');
 fs = require("fs"),
@@ -39,10 +33,13 @@ const api = new API({
   bot.on("ready", function() {
       console.log((bot.user.username +" is active! Currently serving in " + String(bot.guilds.size).white + " guilds.\n".green).bold);
       bot.user.setActivity('with local Pokemon at the Park!'); //Set "playing" status on the user's profile
-  
-  
   });
-  
+ const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DBL, bot);
+
+dbl.on("posted", () => {
+  console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
+});
   function loadCommands() {
       console.log('Loading commands...'.cyan);
       let commands = {}, // Initialize values
