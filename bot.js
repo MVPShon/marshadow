@@ -26,6 +26,12 @@ const api = new API({
         key: 'RGAPI-0b949cf9-f8c8-48ae-941b-2f196696225f',
         region: 'na'
     });
+const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DBL, bot);
+
+dbl.on("posted", () => {
+  console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
+});
   console.log("Starting bot...");
 
   var commands = loadCommands(); // Load commands into the commands object
@@ -34,12 +40,7 @@ const api = new API({
       console.log((bot.user.username +" is active! Currently serving in " + String(bot.guilds.size).white + " guilds.\n".green).bold);
       bot.user.setActivity('with local Pokemon at the Park!'); //Set "playing" status on the user's profile
   });
- const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL, bot);
 
-dbl.on("posted", () => {
-  console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
-});
   function loadCommands() {
       console.log('Loading commands...'.cyan);
       let commands = {}, // Initialize values
