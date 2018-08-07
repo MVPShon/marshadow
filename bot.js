@@ -22,11 +22,6 @@ const Kaori = require('kaori');
 const kaori = new Kaori();
 const Music = require('discord.js-musicbot-addon');
 const API = require('lol-stats-api-module');
-const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL, bot);
-dbl.on("posted", () => {
-    console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
-  });
 
 const api = new API({
         key: 'RGAPI-0b949cf9-f8c8-48ae-941b-2f196696225f',
