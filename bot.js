@@ -405,7 +405,7 @@ if (message.content.startsWith(prefix + "weather")) {
             .addField(`Users `, bot.users.size, true)
             .addField("Uptime", uptime)
             .addField("Ping", new Date().getTime() - message.createdTimestamp + " ms.")
-            .addField("Description", "Multi-functional, ever growing bot based off of the character `Evileye` from the Overlord anime series. Constantly being updated daily with more cool, exciting stuff for you to enjoy!")
+            .addField("Description", "Multi functional bot mostly focused on Pokemon. Mainly a Pokédex but can be so much more!")
             .addField("Important Links", "Discord Server: https://discord.gg/tT8aZjJ")
             .setThumbnail(bot.user.displayAvatarURL)
         message.channel.send(embed);
