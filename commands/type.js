@@ -209,8 +209,9 @@ module.exports.action = (msg, args) => {
         icon_url: 'https://cdn.rawgit.com/110Percent/beheeyem/gh-pages/include/favicon.png'
     };
     console.log(`Sending type(s) ${displayTypes.join(', ')} to guild ${msg.guild.name}`);
-    msg.channel.send("\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\n**" + displayTypes.join(", ") + "**", {
+    msg.channel.send({
         embed: {
+            title: displayTypes.join(", "),
             color: 0xfcf11e,
             fields: [{
                     name: "Offense",
