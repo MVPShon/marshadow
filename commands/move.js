@@ -96,6 +96,7 @@ module.exports.action = (msg, args) => {
             icon_url: 'https://cdn.rawgit.com/110Percent/beheeyem/gh-pages/include/favicon.png'
         };
         var embedObject = {
+            title: capitalizeFirstLetter(move.name),
             color: 0xfcf11e,
             fields: [{
                     name: "Description",
@@ -153,7 +154,7 @@ module.exports.action = (msg, args) => {
             }
         };
         console.log(`Sending move ${move.name} to guild ${msg.guild.name}`);
-        msg.channel.send("\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\n**" + capitalizeFirstLetter(move.name) + "**", { embed: embedObject });
+        msg.channel.send({ embed: embedObject });
     }
 };
 
