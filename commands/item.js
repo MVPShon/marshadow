@@ -60,8 +60,9 @@ module.exports.action = (msg, args) => {
             icon_url: 'https://cdn.rawgit.com/110Percent/beheeyem/gh-pages/include/favicon.png'
         };
         console.log(`Sending item ${item.name} to guild ${msg.guild.name}`);
-        msg.channel.send("\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\n**" + capitalizeFirstLetter(item.name) + "**", {
+        msg.channel.send({
             embed: {
+                title: capitalizeFirstLetter(item.name),
                 color: 0xfcf11e,
                 fields: [{
                         name: "Description",
