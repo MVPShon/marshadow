@@ -1,3 +1,9 @@
+const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DBL, bot);
+
+dbl.on("posted", () => {
+  console.log(`Posted ${bot.guilds.size} servers to the DBL api!`)
+});
 const Discord = require("discord.js");
 oakdexPokedex = require('oakdex-pokedex');
 fs = require("fs"),
