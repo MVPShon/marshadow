@@ -686,9 +686,6 @@ if (message.content.startsWith(prefix + "weather")) {
             .addField("Skip", "Skips the currently playing song.")
         message.channel.send(embed)
     }
-    if (message.content.startsWith(prefix + "admin")) {
-        message.author.send("My current admin/mod commands are: \n`kick` - Requires user to have KICK_MEMBERS permission. Usage `u!kick @Username`\n`ban` - Requires user to have BAN_MEMBERS permission. Usage `u!ban *@Username*`\n`purge` or `delete` - Purges/deletes a set amount of lines of text. Requires user to have MANAGE_MESSAGES permission. Usage `u!purge 10`");
-    }
     if (message.content.startsWith(prefix + "invite")) {
         message.channel.send("If you'd ike to invite me to your server then please click the following link: https://discordapp.com/oauth2/authorize?client_id=463451155842727938&scope=bot&permissions=21469585912");
     }
