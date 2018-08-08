@@ -666,8 +666,8 @@ if (message.content.startsWith(prefix + "weather")) {
             .setAuthor(`ADMIN Commands for ` + bot.user.username)
             .setColor(0xfcf11e)
             .setThumbnail(bot.user.displayAvatarURL)
-            .addField("Ban", "Bans someone from your server. `Usage: " + prefix + "ban Evileye`")
-            .addField("Kick", "Kicks someone from your server. `Usage: " + prefix + "kick Evileye`")
+            .addField("Ban", "Bans someone from your server. `Usage: " + prefix + "ban Marshadow`")
+            .addField("Kick", "Kicks someone from your server. `Usage: " + prefix + "kick Marshadow`")
             .addField("Purge/Delete", "Purges/deletes up to 100 messages from chat. `Usage: " + prefix + "purge 50`")
         message.channel.send(embed)
     }
@@ -681,7 +681,7 @@ if (message.content.startsWith(prefix + "weather")) {
             .addField("Tits","Tits galore. Alias (`boobs`)")
             .addField("Danbooru","Searches Danbooru for hentai tags.")
             .addField("Hentai", "Pulls a random hentai picture off of Reddit.")
-            .addField("Rule34/R34", "Searches https://rule34.xxx for hentai tags. `Usage: " + prefix + "rule34 Evileye` *Note - Spaces are represented as UNDERSCORES on the R34 website*")
+            .addField("Rule34/R34", "Searches https://rule34.xxx for hentai tags. `Usage: " + prefix + "rule34 Marshadow` *Note - Spaces are represented as UNDERSCORES on the R34 website*")
         message.author.send(embed)
     }
     if (message.content.startsWith(prefix + "musichelp")) {
@@ -850,6 +850,42 @@ if (message.content.startsWith(prefix + "weather")) {
                 .setTitle(`${message.author.username} ${insults[result]}`)
                 .setFooter("How does it feel getting roasted by a bot?")
             message.channel.send(embed)
+        }
+    }
+        if (message.content.startsWith(prefix + "eval")) {
+        let botmessage = args.join(" ");
+        if (message.author.id !== "168865955940794368") return;
+        try {
+            var code = args.join(" ");
+            var evaled = eval(code);
+
+            if (typeof evaled !== "string")
+                evaled = require("util").inspect(evaled)
+            var embed = new Discord.RichEmbed()
+            message.channel.send({
+                embed: {
+                    color: 0xfcf11e,
+                    author: {
+                        name: bot.user.username,
+                        icon_url: bot.user.avatarURL
+                    },
+                    description: botmessage,
+                    fields: [{
+                        name: "Result",
+                        value: ("x1", clean(evaled))
+                    }],
+                    timestamp: new Date(),
+                }
+            });
+        } catch (err) {
+            message.channel.send(`\`ERROR\` \`\`\`x1\n${clean(err)}\n\`\`\``);
+        }
+
+        function clean(text) {
+            if (typeof(text) === "string")
+                return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+            else
+                return text;
         }
     }
 })
