@@ -38,11 +38,6 @@ dbl.on('posted', () => {
 dbl.on('error', e => {
  console.log(`Oops! ${e}`);
 })
-bot.on('ready', () => {
-    setInterval(() => {
-        dbl.postStats(bot.guilds.size);
-    }, 10000);
-});
   console.log("Starting bot...");
 
   var commands = loadCommands(); // Load commands into the commands object
@@ -50,6 +45,9 @@ bot.on('ready', () => {
   bot.on("ready", function() {
       console.log((bot.user.username +" is active! Currently serving in " + String(bot.guilds.size).white + " guilds.\n".green).bold);
       bot.user.setActivity('with local Pokemon at the Park!'); //Set "playing" status on the user's profile
+          setInterval(() => {
+        dbl.postStats(bot.guilds.size);
+    }, 10000);
   });
 
   function loadCommands() {
