@@ -27,6 +27,22 @@ const api = new API({
         key: 'RGAPI-0b949cf9-f8c8-48ae-941b-2f196696225f',
         region: 'na'
     });
+
+const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DBL, bot);
+
+dbl.on('posted', () => {
+  console.log('Server count posted!');
+})
+
+dbl.on('error', e => {
+ console.log(`Oops! ${e}`);
+})
+bot.on('ready', () => {
+    setInterval(() => {
+        dbl.postStats(bot.guilds.size);
+    }, 10000);
+});
   console.log("Starting bot...");
 
   var commands = loadCommands(); // Load commands into the commands object
