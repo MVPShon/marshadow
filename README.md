@@ -1,2 +1,2 @@
-# uxie
-Uxie bot for Discord!
+# marshadow
+Marshadow bot for Discord!
