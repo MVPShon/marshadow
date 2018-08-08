@@ -17,7 +17,7 @@ Object.keys(dex).map(function(key, index) {
     species.push(dex[key].species.toLowerCase());
 });
 let bot = new Discord.Client();
-let prefix = "u!";
+let prefix = "m!";
 const Kaori = require('kaori');
 const kaori = new Kaori();
 const Music = require('discord.js-musicbot-addon');
