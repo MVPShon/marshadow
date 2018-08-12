@@ -52,7 +52,7 @@ bot.on("ready", async () => {
     ]
 
     console.log("Marshadow is ready to go!")
-    evileye.users.get("168865955940794368").send(`${bot.user.username} has just restarted! \n${bot.user.username} has been up for ${evileye.uptime} milliseconds!`)
+    bot.users.get("168865955940794368").send(`${bot.user.username} has just restarted! \n${bot.user.username} has been up for ${bot.uptime} milliseconds!`)
     setInterval(function() {
     let status = Math.floor((Math.random() * statuses.length));
     bot.user.setActivity(statuses[status], {
