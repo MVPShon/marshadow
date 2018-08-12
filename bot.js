@@ -42,13 +42,24 @@ dbl.on('error', e => {
 
   var commands = loadCommands(); // Load commands into the commands object
   
-  bot.on("ready", function() {
-      console.log((bot.user.username +" is active! Currently serving in " + String(bot.guilds.size).white + " guilds.\n".green).bold);
-      bot.user.setActivity(`on ${bot.guilds.size} servers!`); //Set "playing" status on the user's profile
-          setInterval(() => {
-        dbl.postStats(bot.guilds.size);
-    }, 10000);
-  });
+bot.on("ready", async () => {
+    let statuses = [
+        `${bot.guilds.size} servers!`,
+        `over ${bot.users.size} people!`,
+        `\"${prefix}` + `help\" for help with ${bot.user.username}`,
+        `${bot.channels.size} rooms!`,
+        `newest episode of Pokémon!`
+    ]
+
+    console.log("Marshadow is ready to go!")
+    evileye.users.get("168865955940794368").send(`${bot.user.username} has just restarted! \n${bot.user.username} has been up for ${evileye.uptime} milliseconds!`)
+    setInterval(function() {
+    let status = Math.floor((Math.random() * statuses.length));
+    bot.user.setActivity(statuses[status], {
+        type: 'WATCHING'
+    })
+    }, 15000)
+});
 
   function loadCommands() {
       console.log('Loading commands...'.cyan);
