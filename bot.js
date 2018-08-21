@@ -667,6 +667,7 @@ if (message.content.startsWith(prefix + "weather")) {
         .addField("Invite","Provides a link to invite " + bot.user.username + " to your server.")
         .addField("Move","Provides information on a Pokemon move")
         .addField("Roll","Roll the die.")
+        .addField("Smogon","Random Smogon Pokemon information.")
         .addField("Type","Provides type information for a Pokemon type.")
         .addField("User-info","Provides detailed information about the user mentioned.")
         .setFooter("For all music related commands type: " + prefix + "musichelp | For all admin commands type: |For all NSFW commands type: " + prefix + "nsfw")
