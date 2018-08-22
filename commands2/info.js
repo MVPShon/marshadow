@@ -16,7 +16,7 @@ exports.run = async (bot, message, args) => {
         .addField("Uptime", uptime)
         .addField("Ping", new Date().getTime() - message.createdTimestamp + " ms.")
         .addField("Description", "Multi functional bot mostly focused on Pokemon. Mainly a Pokédex but can be so much more!")
-        .addField("Important Links", "[Discord Server](https://discord.gg/tT8aZjJ) | [Website](https://http://marshadowbot.glitch.me/) | [Upvote Me!](https://discordbots.org/bot/463451155842727938/vote)")
+        .addField("Important Links", "[Discord Server](https://discord.gg/tT8aZjJ) | [Website](http://marshadowbot.glitch.me/) | [Upvote Me!](https://discordbots.org/bot/463451155842727938/vote)")
         .setThumbnail(bot.user.displayAvatarURL)
     message.channel.send(embed);
 }    
