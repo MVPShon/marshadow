@@ -16,7 +16,7 @@ Object.keys(dex).map(function(key, index) {
     species.push(dex[key].species.toLowerCase());
 });
 let bot = new Discord.Client();
-let prefix = ">>";
+let prefix = "m!";
 const Music = require('discord.js-musicbot-addon');
 const API = require('lol-stats-api-module');
 
