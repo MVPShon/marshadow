@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-let prefix = ">>";
+let prefix = "m!";
 exports.run = async (bot, message, args) => {
     let embed = new Discord.RichEmbed()
         .setAuthor(`NSFW Commands for ` + bot.user.username)
