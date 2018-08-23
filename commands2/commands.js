@@ -12,6 +12,7 @@ exports.run = async (bot, message, args) => {
     .addField("Copy","Straight forward command. I copy whatever you tell me to. This command works better if I can delete other people's messages.")
     .addField("Invite","Provides a link to invite " + bot.user.username + " to your server.")
     .addField("Roll","Roll the die.")
+    .addField("UrbanDictionary", "Looks up a definition from UD. `Usage: " + prefix + "urbandictionary Hello`")
     .addField("User-info","Provides detailed information about the user mentioned.")
     .setFooter("For all music related commands type: " + prefix + "musichelp | For all admin commands type: |For all NSFW commands type: " + prefix + "nsfw")
     message.channel.send(embed)
