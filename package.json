@@ -52,6 +52,7 @@
     "require-reload": "^0.2.2",
     "round-to": "^3.0.0",
     "smogon-usage-fetch": "^2.3.0",
+    "urban.js": "^2.4.3",
     "url": "^0.11.0",
     "urlencode": "^1.1.0",
     "weather": "^0.1.0",
