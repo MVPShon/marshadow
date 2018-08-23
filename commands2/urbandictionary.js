@@ -4,7 +4,7 @@ exports.run = async (evileye, message, args) => {
  
 urban(`${args.join(" ")}`).then(data => {
     let embed = new Discord.RichEmbed()
-    .setColor(0xff6464)
+    .setColor(0xfcf11e)
     .setTitle("Defnition for: " + data.word.replace(/\[|\]/g, ""))
     .setDescription(data.definition.replace(/\[|\]/g, ""))
     .addField("Example", data.example.replace(/\[|\]/g, ""))
