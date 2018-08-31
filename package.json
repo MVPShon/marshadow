@@ -1,6 +1,6 @@
 {
   "name": "marshadow",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "All around Pokémon bot!",
   "main": "bot.js",
   "scripts": {
@@ -47,6 +47,9 @@
     "opusscript": "0.0.6",
     "pokedex-api": "^1.1.1",
     "random-puppy": "^1.1.0",
+    "reddit4k": "^1.0.0",
+    "redditasses": "^1.0.0",
+    "reddittits": "^1.0.0",
     "request": "^2.87.0",
     "require-from-url": "^3.1.2",
     "require-reload": "^0.2.2",
