@@ -3,7 +3,7 @@ exports.run = async (bot, message, args) => {
 var randomPuppy = require('random-puppy');
 var subreddits = [
     'OffensiveMemes',
-    'ImGoingToHellForThis'
+    'EdgyMemes'
 ]
 var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
 randomPuppy(sub)
