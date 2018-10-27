@@ -11,7 +11,7 @@ exports.run = async (bot, message, args) => {
         .then(images => {
             (
                 console.log(images[0].common.fileURL))
-            message.channel.send(`Rule34 result for:* ${args[0]} *`)
+            message.channel.send(`Rule34 result for: "${args[0]}"`)
             message.channel.send(images[0].common.fileURL)
         }).catch(err => message.channel.send("No image found for your search!"));
 }
